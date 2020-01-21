@@ -12,6 +12,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "axios": "^0.19.1",
     "mongodb": "^3.5.2",
     "next": "^9.2.0",
     "react": "^16.12.0",

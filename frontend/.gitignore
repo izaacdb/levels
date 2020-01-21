@@ -4,5 +4,7 @@ dist/
 build/
 .next/
 functions/
+.idea
 .idea/
+.idea/*
 yarn-error.log
