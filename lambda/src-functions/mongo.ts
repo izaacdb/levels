@@ -47,7 +47,7 @@ export const ReadingSchema = new mongoose.Schema({
 
 const Reading = mongoose.model<IReading>('readings', ReadingSchema)
 
-export const getReadings = async () => {
+export const getReadings = async (callback: Callback) => {
   const readings = await Reading.find()
   console.log(readings)
   if (readings && readings.length > 0) {
@@ -56,7 +56,7 @@ export const getReadings = async () => {
     })
   } else {
     console.log('An error occurred')
-    return []
+    callback('Something went wrong', wrap({ error: 'Something went wrong' }))
   }
 }
 
@@ -67,8 +67,8 @@ export const getReadings = async () => {
 
 export const handler: Handler = (event: APIGatewayEvent, context: Context, callback: Callback) => {
   console.log('Inside mongo handler')
-  getReadings().then(readings => {
+  return getReadings(callback).then(readings => {
     console.log(`Got ${readings.length} readings`)
-    callback(null, wrap({ readings }))
+    return wrap({ readings })
   })
 }
