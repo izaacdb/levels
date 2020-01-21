@@ -2,20 +2,15 @@ import dotenv from 'dotenv'
 import { Handler, APIGatewayEvent, Context, Callback } from 'aws-lambda'
 import * as mongoose from 'mongoose'
 import { wrap } from './lib'
-
 dotenv.config()
-
 const { DBUSER, DBPASSWORD, DBURL, DBPORT, DBNAME } = process.env
-
 const uri = `mongodb://${DBUSER}:${DBPASSWORD}@${DBURL}:${DBPORT}/${DBNAME}`
-console.log(uri)
 
-mongoose.connect(uri, (err: any) => {
-  if (err) {
-    console.log(err.message)
-  } else {
-    console.log('Successfully Connected!')
-  }
+
+mongoose.connect(uri).then(() => {
+  console.log('Successfully Connected!')
+}).catch(e => {
+  console.log(e.message)
 })
 
 export interface IReading extends mongoose.Document {
@@ -51,17 +46,22 @@ export const ReadingSchema = new mongoose.Schema({
 
 const Reading = mongoose.model<IReading>('readings', ReadingSchema)
 
-export const getReadings = () => {
-  Reading.find((err: any, readings: any) => {
-    if (err) {
-      console.log('error')
-    } else {
-      return readings.map(r => {
-        return { sgv: r.sgv * 0.0555, date: r.date, rssi: r.rssi, noise: r.noise }
-      })
-    }
-  })
+export const getReadings = async () => {
+  const readings = await Reading.find()
+  if (readings && readings.length > 0) {
+    return readings.map(r => {
+      return { sgv: r.sgv * 0.0555, date: r.date, rssi: r.rssi, noise: r.noise }
+    })
+  } else {
+    console.log('An error occurred')
+    return []
+  }
 }
+
+// getReadings().then(readings => {
+//   console.log(readings)
+//   return readings
+// })
 
 export const handler: Handler = (event: APIGatewayEvent, context: Context, callback: Callback) => {
   console.log(`Method is ${event.httpMethod}.`)
