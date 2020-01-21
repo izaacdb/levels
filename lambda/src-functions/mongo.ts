@@ -70,5 +70,3 @@ export const handler: Handler = (event: APIGatewayEvent, context: Context, callb
     callback(null, wrap({ readings }))
   })
 }
-
-handler(null,null,()=>{})
