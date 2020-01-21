@@ -49,6 +49,7 @@ const Reading = mongoose.model<IReading>('readings', ReadingSchema)
 
 export const getReadings = async () => {
   const readings = await Reading.find()
+  console.log(readings)
   if (readings && readings.length > 0) {
     return readings.map(r => {
       return { sgv: r.sgv * 0.0555, date: r.date, rssi: r.rssi, noise: r.noise }
@@ -65,6 +66,7 @@ export const getReadings = async () => {
 // })
 
 export const handler: Handler = (event: APIGatewayEvent, context: Context, callback: Callback) => {
+  console.log('Inside mongo handler')
   getReadings().then(readings => {
     console.log(`Got ${readings.length} readings`)
     callback(null, wrap({ readings }))
