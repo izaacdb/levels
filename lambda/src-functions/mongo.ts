@@ -67,7 +67,7 @@ export const getReadings = async () => {
 export const handler: Handler = (event: APIGatewayEvent, context: Context, callback: Callback) => {
   getReadings().then(readings => {
     console.log(`Got ${readings.length} readings`)
-    callback(null, wrap({ data: getReadings() }))
+    callback(null, wrap({ readings }))
   })
 }
 
