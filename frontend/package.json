@@ -1,0 +1,32 @@
+{
+  "name": "healthbar",
+  "version": "1.0.0",
+  "description": "BG graphing application",
+  "main": "index.js",
+  "author": "Izaac Broadbent",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "mongodb": "^3.5.2",
+    "next": "^9.2.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-redux": "^7.1.3",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "latest",
+    "styled-reset": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^13.1.8",
+    "@types/react": "^16.9.18",
+    "typescript": "^3.7.5"
+  }
+}

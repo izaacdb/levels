@@ -1,0 +1,42 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": [
+    "airbnb",
+    "prettier",
+    "plugin:jest/recommended",
+    "@contentful/eslint-config-extension/typescript",
+    "@contentful/eslint-config-extension/jest",
+    "@contentful/eslint-config-extension/react"
+  ],
+  "plugins": ["prettier", "jest"],
+  "rules": {
+    "dot-notation": 0,
+    "@typescript-eslint/interface-name-prefix": 0,
+    "import/prefer-default-export": 0,
+    "semi": [2, "never"],
+    "prettier/prettier": 2,"no-nested-ternary":0,
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".tsx", ".jsx"]
+      }
+    ]
+  },
+  "globals": {
+    "fetch": false,
+    "process": true
+  },
+  "env": {
+    "jest/globals": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}

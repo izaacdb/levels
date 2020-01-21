@@ -1,0 +1,8 @@
+node_modules/
+.coverage/
+dist/
+build/
+.next/
+functions/
+.idea/
+yarn-error.log
