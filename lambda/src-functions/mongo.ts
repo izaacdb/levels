@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import { Handler, APIGatewayEvent, Context, Callback } from 'aws-lambda'
 import * as mongoose from 'mongoose'
 import { wrap } from './lib'
+
 dotenv.config()
 const { DBUSER, DBPASSWORD, DBURL, DBPORT, DBNAME } = process.env
 const uri = `mongodb://${DBUSER}:${DBPASSWORD}@${DBURL}:${DBPORT}/${DBNAME}`
@@ -64,6 +65,10 @@ export const getReadings = async () => {
 // })
 
 export const handler: Handler = (event: APIGatewayEvent, context: Context, callback: Callback) => {
-  console.log(`Method is ${event.httpMethod}.`)
-  callback(null, wrap({ data: getReadings() }))
+  getReadings().then(readings => {
+    console.log(`Got ${readings.length} readings`)
+    callback(null, wrap({ data: getReadings() }))
+  })
 }
+
+handler(null,null,()=>{})
