@@ -1,8 +1,6 @@
 import React from 'react'
-
 import { initializeStore, ReduxState } from './index'
-import { getReadingsThunk } from './thunks'
-// import test from './test'
+
 const isServer = typeof window === 'undefined'
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__'
 

@@ -6,7 +6,6 @@ import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import withReduxStore from '../redux/store'
 import { BaseStyles } from '../components/styles'
-import Menu from '../components/menu'
 import Nav from '../components/nav'
 import Footer from '../components/footer'
 
@@ -26,12 +25,14 @@ export class Mobile extends App<any> {
         <Head>
           <title>Healthbar</title>
           <meta name="viewport" content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" />
+          <style>
+            @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap');
+          </style>
         </Head>
         <BaseStyles />
         <Provider store={reduxStore}>
           <PersistGate loading={<Component {...pageProps} />} persistor={this.persistor}>
             <Nav />
-            <Menu />
             <Component {...pageProps} style={{ position: 'fixed' }} />
             <Footer />
           </PersistGate>

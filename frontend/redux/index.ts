@@ -3,6 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
+import { Reading } from './api'
 
 export enum ActionTypes {
   READINGS_GET_SUCCESS = '[Readings] DB retrieval succeeded',
@@ -11,13 +12,25 @@ export enum ActionTypes {
 }
 
 export interface ReduxState {
-  readings: any[]
+  readings: { data: Reading[], pending: boolean, error: string }
   getState: () => void
 }
 
-export const readingsReducer = (state = [], action) => {
-  switch (action.type) {
+interface Action<T> {
+  data: T
+  error?: string
+  type: string
+}
 
+const initialReadingState: ReduxState['readings'] = {
+  data: [],
+  pending: false,
+  error: null
+}
+
+
+export const readingsReducer = (state: ReduxState['readings'] = initialReadingState, action: Action<Reading[]>) => {
+  switch (action.type) {
     case ActionTypes.READINGS_GET_SUCCESS: {
       console.log(action)
       return { ...state, data: action.data }

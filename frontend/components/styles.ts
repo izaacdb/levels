@@ -5,5 +5,11 @@ import { createGlobalStyle } from 'styled-components'
 import reset from 'styled-reset'
 
 export const BaseStyles = createGlobalStyle`
-  ${reset}  
+  ${reset}
+  
+  body{
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #171717;
+    color: #CCCCCC;
+  }
 `

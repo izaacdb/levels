@@ -1,19 +1,17 @@
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 
-const Container = styled.ul`
-  
+const Container = styled.div`
+  width: 100vw;
+  font-size: 1rem;
+  margin: 10px;
 `
-const Row = styled.li`
- 
-`
-
 type Props = {}
 
 const Footer: FunctionComponent<Props> = () => {
   return (
     <Container>
-      <Row>I'm a footer</Row>
+      Footer contents
     </Container>
   )
 }
