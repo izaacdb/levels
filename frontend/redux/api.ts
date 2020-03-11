@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const readings = 'https://healthbar-lambdas.netlify.com/.netlify/functions/mongo'
+const readings = 'http://localhost:9000/mongo'
+//https://healthbar-lambdas.netlify.com/.netlify/functions/mongo'
 
 export type Reading = {
   sgv: number
@@ -11,7 +12,9 @@ export type Reading = {
 
 export const readingsGet = (): Promise<Reading[]> => {
   return axios.get(readings)
-    .then(response => response.data)
+    .then(response => {
+      return response.data.map(r => ({ ...r, sgv: r.sgv * 0.0555 }))
+    })
     .catch(e => {
       handleError(e)
       return []

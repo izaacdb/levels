@@ -15,7 +15,6 @@ export const readingsGetFailed = (error: string) => {
 // thunks
 
 export function getReadingsThunk() {
-  console.log('readings think')
   return dispatch => {
     dispatch(readingsGetPending())
     readingsGet()

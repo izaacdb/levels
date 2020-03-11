@@ -3,7 +3,11 @@ import * as d3 from 'd3'
 import styled from 'styled-components'
 import { Reading } from '../redux/api'
 
-const Svg = styled.svg``
+const Svg = styled.svg`
+  background-color: #171717;
+  //margin: 0 30px;
+  border: 1px solid #223130;
+`
 
 type d3Node = {
   id: string,
@@ -65,8 +69,8 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
     const xMin = d3.min(data, (d) => Math.min(d.date))
     const xMax = d3.max(data, (d) => Math.max(d.date))
 
-    const yMin = d3.min(data, (d) => Math.min(d.sgv))
-    const yMax = d3.max(data, (d) => Math.max(d.sgv))
+    // const yMin = d3.min(data, (d) => Math.min(d.sgv))
+    // const yMax = d3.max(data, (d) => Math.max(d.sgv))
 
     const xScale = d3.scaleTime()
       .domain([xMin, xMax])
@@ -91,10 +95,10 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .enter()
       .append('svg:circle')
       .attr('r', 1)
-      .attr('cx', (d, i) => xScale(d.date))
-      .attr('cy', (d, i) => yScale(d.sgv))
+      .attr('cx', d => xScale(d.date))
+      .attr('cy', d => yScale(d.sgv))
 
-      .style('stroke', (d, i) => {
+      .style('stroke', d => {
         if (d.sgv > 9) {
           return '#ffc107'
         } else if (d.sgv < 4.3) {

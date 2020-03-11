@@ -32,18 +32,15 @@ const initialReadingState: ReduxState['readings'] = {
 export const readingsReducer = (state: ReduxState['readings'] = initialReadingState, action: Action<Reading[]>) => {
   switch (action.type) {
     case ActionTypes.READINGS_GET_SUCCESS: {
-      console.log(action)
-      return { ...state, data: action.data }
+      return { ...state, data: action.data, pending: false }
     }
     case ActionTypes.READINGS_GET_PENDING: {
-      console.log(action)
       return {
         ...state,
         pending: true
       }
     }
     case ActionTypes.READINGS_GET_FAILED: {
-      console.log(action)
       return {
         ...state,
         pending: false,

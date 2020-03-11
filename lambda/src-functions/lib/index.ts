@@ -6,6 +6,12 @@ const headers = {
   'Content-Type': 'application/json'
 }
 
-export const wrap = (body: object, statusCode = 200) => {
+export interface ResponseWrapper {
+  headers: typeof headers
+  statusCode: number
+  body: string
+}
+
+export const wrap = (body: object, statusCode = 200): ResponseWrapper => {
   return { headers, statusCode, body: JSON.stringify(body) }
 }

@@ -1,12 +1,17 @@
 import dotenv from 'dotenv'
-import { Handler, APIGatewayEvent, Context, Callback } from 'aws-lambda'
+import { APIGatewayEvent, Callback, Context, Handler } from 'aws-lambda'
 import * as mongoose from 'mongoose'
 import { wrap } from './lib'
+
+/**
+ * Database starts at
+ * new Date(1579621683063)
+ * Tue Jan 21 2020 15:48:03 GMT+0000 (Western European Standard Time)
+ */
 
 dotenv.config()
 const { DBUSER, DBPASSWORD, DBURL, DBPORT, DBNAME } = process.env
 const uri = `mongodb://${DBUSER}:${DBPASSWORD}@${DBURL}:${DBPORT}/${DBNAME}`
-
 
 mongoose.connect(uri).then(() => {
   console.log('Successfully Connected!')
@@ -44,25 +49,30 @@ export const ReadingSchema = new mongoose.Schema({
   rssi: { type: Number, required: true },
   noise: { type: Number, required: true }
 })
-
 const Reading = mongoose.model<IReading>('readings', ReadingSchema)
 
-export const getReadings = async (callback: Callback) => {
-  const readings = await Reading.find()
-  if (readings && readings.length > 0) {
-    return readings.map(r => {
-      return { sgv: r.sgv * 0.0555, date: r.date, rssi: r.rssi, noise: r.noise }
-    })
-  } else {
-    console.log('An error occurred')
-    callback('Something went wrong', wrap({ error: 'Something went wrong' }, 400))
-  }
+
+export const getReadings = async () => {
+  console.log('here')
+  let lastWeek = (new Date() as any) - 2 * 60 * 60 * 24 * 1000
+  console.log(lastWeek)
+  console.log('pre readings')
+  return Reading.find({
+    date: {
+      $gte: lastWeek
+    }
+  }).select('sgv date rssi noise' )
 }
 
 export const handler: Handler = (event: APIGatewayEvent, context: Context, callback: Callback) => {
   console.log('Inside mongo handler')
-  return getReadings(callback).then(readings => {
-    console.log(`Got ${readings.length} readings`)
-    return wrap(readings)
+  return getReadings().then(readings => {
+    if (readings?.length > 0) {
+      console.log(`Retrieved ${readings.length} readings from database`, 200)
+      return wrap(readings)
+    } else {
+      console.log('Didn\'t retrieve any readings from DB query')
+      return wrap({ error: 'Didn\'t retrieve any readings from DB query' }, 400)
+    }
   })
 }
