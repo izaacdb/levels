@@ -42,6 +42,7 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
     const timeFormat = d3.timeFormat('%H:%M')
 
     chart.attr('width', width).attr('height', height)
+
     chart.append('rect')
       .attr('x', margin)
       .attr('y', height - (height * 0.22) - margin)
@@ -95,10 +96,12 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .enter()
       .append('svg:circle')
       .attr('r', 1)
+      .attr('stroke-opacity', 0)
       .attr('cx', d => xScale(d.date))
       .attr('cy', d => yScale(d.sgv))
 
-      .style('stroke', d => {
+      .style('fill', d => {
+        console.log(d.sgv)
         if (d.sgv > 9) {
           return '#ffc107'
         } else if (d.sgv < 4.3) {
@@ -110,9 +113,13 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
 
     chart.append('g').call(yAxis)
       .attr('transform', `translate(${margin}, 0)`).attr('stroke', '#CCCCCC')
+      .attr('font-weight', 100)
+      .attr('font-family', '\'IBM Plex Sans\', sans-serif')
 
     chart.append('g').call(xAxis)
       .attr('transform', 'translate(0, ' + (height - margin) + ')').attr('stroke', '#CCCCCC')
+      .attr('font-weight', 100)
+      .attr('font-family', '\'IBM Plex Sans\', sans-serif')
 
 
     //

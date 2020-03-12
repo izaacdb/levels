@@ -12,5 +12,6 @@ export const BaseStyles = createGlobalStyle`
     background-color: #171717;
     color: #CCCCCC;
     line-height: 1.4;
+    font-size: 0.8rem;
   }
 `
