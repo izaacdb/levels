@@ -1,29 +1,6 @@
 import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
-import styled from 'styled-components'
 import { Reading } from '../redux/api'
-
-const Svg = styled.svg`
-  background-color: #171717;
-  //margin: 0 30px;
-  border: 1px solid #223130;
-`
-
-type d3Node = {
-  id: string,
-  group: number
-};
-
-type d3Link = {
-  source: string,
-  target: string,
-  value: number
-};
-
-type Graph = {
-  nodes: d3Node[],
-  links: d3Link[]
-};
 
 type Props = {
   data: Reading[]
@@ -37,41 +14,46 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
 
   useEffect(() => {
 
+    console.log('graph effect')
+    svgRef.current.innerHTML = ''
+
     const chart = d3.select(svgRef.current)
 
-    const timeFormat = d3.timeFormat('%H:%M')
+    const timeFormat = d3.timeFormat('%a, %H:%M')
 
     chart.attr('width', width).attr('height', height)
 
+    // 265 x axis line
+    const yPosOfXAxis = 265
+    const plotWidth = width - (margin * 2)
+    const plotHeight = height - (margin * 2)
+
     chart.append('rect')
       .attr('x', margin)
-      .attr('y', height - (height * 0.22) - margin)
-      .attr('width', width - margin - margin)
-      .attr('height', height * 0.22)
+      .attr('y', yPosOfXAxis) // 360 - 30
+      .attr('width', plotWidth)
+      .attr('height', plotHeight * 0.22)
       .attr('fill', '#400d02')
       .attr('opacity', 1)
 
     chart.append('line')
       .attr('x1', margin)
-      .attr('y1', height - (height * 0.22) - margin)
-      .attr('x2', width - margin)
-      .attr('y2', height - (height * 0.22) - margin)
+      .attr('y1', yPosOfXAxis)
+      .attr('x2', plotWidth + margin)
+      .attr('y2', yPosOfXAxis)
       .attr('stroke', '#ca0000')
       .attr('stroke-width', 0.5)
 
     chart.append('line')
       .attr('x1', margin)
-      .attr('y1', height - (height * 0.45) - margin)
-      .attr('x2', width - margin)
-      .attr('y2', height - (height * 0.45) - margin)
-      .attr('stroke-width', 0.5)
+      .attr('y1', (margin * 2) + (plotHeight * 0.45)) // 30 + 135
+      .attr('x2', plotWidth + margin)
+      .attr('y2', (margin * 2) + (plotHeight * 0.45))
       .attr('stroke', '#ffc107')
+      .attr('stroke-width', 0.5)
 
     const xMin = d3.min(data, (d) => Math.min(d.date))
     const xMax = d3.max(data, (d) => Math.max(d.date))
-
-    // const yMin = d3.min(data, (d) => Math.min(d.sgv))
-    // const yMax = d3.max(data, (d) => Math.max(d.sgv))
 
     const xScale = d3.scaleTime()
       .domain([xMin, xMax])
@@ -101,7 +83,6 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .attr('cy', d => yScale(d.sgv))
 
       .style('fill', d => {
-        console.log(d.sgv)
         if (d.sgv > 9) {
           return '#ffc107'
         } else if (d.sgv < 4.3) {
@@ -113,50 +94,17 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
 
     chart.append('g').call(yAxis)
       .attr('transform', `translate(${margin}, 0)`).attr('stroke', '#CCCCCC')
-      .attr('font-weight', 100)
-      .attr('font-family', '\'IBM Plex Sans\', sans-serif')
+      .attr('font-weight', 300)
 
     chart.append('g').call(xAxis)
       .attr('transform', 'translate(0, ' + (height - margin) + ')').attr('stroke', '#CCCCCC')
-      .attr('font-weight', 100)
-      .attr('font-family', '\'IBM Plex Sans\', sans-serif')
-
-
-    //
-    // chart.append('rect')
-    //   .attr('x', margin)
-    //   .attr('y', height - (height * 0.45) - margin)
-    //   .attr('width', width - margin - margin)
-    //   .attr('height', height * 0.22)
-    //   .attr('fill', 'green')
-    //   .attr('opacity', 0.2)
+      .attr('font-weight', 300)
 
   }, [svgRef])
 
   return (
-    <Svg style={width + margin + margin} ref={svgRef} />
+    <svg ref={svgRef} />
   )
 }
 
 export default Graph
-
-
-/**
- const xMax = d3.max(data, d => +d.date)
- const yMax = d3.max(data, d => +d.sgv)
- const padding = 30
- const width = 500
- const height = 300
- const xScale = d3.scaleLinear()
- .domain([0, xMax])
- .range([padding, width - padding * 2])
- const yScale = d3.scaleLinear()
- .domain([0, yMax])
- .range([height - padding, padding])
- const scales = { xScale, yScale }
- return (
- <svg width={width} height={height}>
- <Dots {...scales} />
- </svg>
- )
- **/

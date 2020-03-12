@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 import { ReduxState } from '../redux'
 import { getReadingsThunk } from '../redux/actions'
 import { Reading } from '../redux/api'
@@ -11,6 +12,13 @@ type Props = {
   pending: boolean
 }
 
+const GraphWrapper = styled.div`
+  width: 100%;
+  overflow: scroll;
+  background-color: #171717;
+  border: 1px solid #223130;
+  //box-sizing: border-box;
+`
 
 const HomePage: FunctionComponent<Props> = ({ readings, getReadingsThunk, pending }) => {
   if (readings.length === 0 && !pending) {
@@ -21,10 +29,12 @@ const HomePage: FunctionComponent<Props> = ({ readings, getReadingsThunk, pendin
   }
 
   return (
-    <Graph data={readings}
-           margin={30}
-           width={process.browser ? window.innerWidth < 1024 ? window.innerWidth : 1024 : 500}
-           height={360} />
+    <GraphWrapper>
+      <Graph data={readings}
+             margin={30}
+             width={1024}
+             height={360} />
+    </GraphWrapper>
 
   )
 }

@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { ReduxState } from '../redux'
-import { getReadingsThunk } from '../redux/actions'
 import { Reading } from '../redux/api'
 
 const H1 = styled.h1`
@@ -57,7 +56,7 @@ function mapStateToProps(state: ReduxState) {
   }
 }
 
-const mapDispatchToProps = { getReadingsThunk }
+const mapDispatchToProps = {}
 
 export default connect(
   mapStateToProps,

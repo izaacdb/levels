@@ -12,7 +12,7 @@ const Stripes = styled.div`
   background: linear-gradient(#171717 0,#192323 100%);
   grid: repeat(5, 200px) / repeat(10, 1fr);
   span:nth-child(1){
-    grid-column: span 8;
+    grid-column: span 10;
     background: linear-gradient(100grad,#171717 30%,#243737);
   }
   span:nth-child(2){
