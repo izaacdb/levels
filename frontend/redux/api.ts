@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const readings = 'http://localhost:9000/mongo'
+const readings = 'http://192.168.1.71:9000/mongo'
 //https://healthbar-lambdas.netlify.com/.netlify/functions/mongo'
 
 export type Reading = {

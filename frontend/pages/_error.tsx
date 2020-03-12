@@ -6,7 +6,7 @@ const ErrorDiv = styled.div`
   
   justify-content: center;
   align-items: flex-start;
-  font-family: HMSerifRegular, sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   flex-direction: column;
   padding: 0 10vw 3vw;
 `

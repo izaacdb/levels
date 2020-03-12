@@ -93,11 +93,11 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
 
 
     chart.append('g').call(yAxis)
-      .attr('transform', `translate(${margin}, 0)`).attr('stroke', '#CCCCCC')
+      .attr('transform', `translate(${margin}, 0)`).attr('stroke', '#f0f0f0')
       .attr('font-weight', 300)
 
     chart.append('g').call(xAxis)
-      .attr('transform', 'translate(0, ' + (height - margin) + ')').attr('stroke', '#CCCCCC')
+      .attr('transform', 'translate(0, ' + (height - margin) + ')').attr('stroke', '#f0f0f0')
       .attr('font-weight', 300)
 
   }, [svgRef])
