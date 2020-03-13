@@ -1,5 +1,5 @@
 {
-  "name": "healthbar",
+  "name": "levels",
   "version": "1.0.0",
   "description": "BG graphing application",
   "main": "index.js",
