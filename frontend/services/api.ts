@@ -44,7 +44,7 @@ const handleError = error => {
     console.log('Config error')
     console.log(error.config)
   } else {
-    console.log('Setup error.')
+    console.log('Setup error')
     console.log(error.stack)
     console.log(error.message)
   }

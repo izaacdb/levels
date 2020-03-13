@@ -3,6 +3,9 @@ import reset from 'styled-reset'
 
 export const BaseStyles = createGlobalStyle`
   ${reset}
+  ::selection {
+    background-color:#76a9a9;
+  }
   body{
     box-sizing: border-box;
     font-family: 'IBM Plex Sans', sans-serif;
