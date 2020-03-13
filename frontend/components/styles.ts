@@ -6,7 +6,7 @@ export const BaseStyles = createGlobalStyle`
   body{
     box-sizing: border-box;
     font-family: 'IBM Plex Sans', sans-serif;
-    background-color: #171717;
+    background-color: #1a2322;
     color: #f0f0f0;
     line-height: 1.4;
     font-size: 0.8rem;
