@@ -46,6 +46,7 @@ export const BaseStyles = createGlobalStyle`
     border-color: #476c6c;
   }
   .react-datepicker__input-container input{
+    cursor: pointer;
     width: 8rem;
     background: #171717;
     border: 1px solid #233130;
@@ -54,8 +55,23 @@ export const BaseStyles = createGlobalStyle`
     box-shadow: none;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 0.8rem;
+    caret-color: transparent;
     &:hover{
       border-color: #476c6c;
+    }
+  }
+  .react-datepicker-ignore-onclickoutside{
+    border-color: #476c6c!important;
+  }
+  .graph-type-label + div{
+    @media (min-width: 768px){
+      display:inline-block;
+    }
+  }
+  .header-label{
+    margin-right: 1rem;
+    + div {
+      margin-right: 1rem;
     }
   }
 `

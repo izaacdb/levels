@@ -19,12 +19,14 @@ const H2 = styled.h2`
   padding: 0;
 `
 const Container = styled.div`
-  margin: 1rem 0;
+  margin: 1rem 0 0;
 `
 const Col = styled.li`
   color: #f0f0f0;
-  display: inline-block;
-  margin: 0 1rem 0 0;
+  margin: 0 1rem 1rem 0;
+  @media (min-width: 768px){
+    display: inline-block;
+  }
 `
 
 const Nav = styled.ul``
@@ -37,7 +39,7 @@ const selectStyles = {
   control: (provided, state) => ({
     ...provided,
     backgroundColor: '#171717',
-    borderColor: '#233130',
+    borderColor: state.menuIsOpen ? '#476c6c' : '#233130',
     borderRadius: 0,
     boxShadow: 'none',
     minHeight: 0,
@@ -49,7 +51,8 @@ const selectStyles = {
       borderColor: '#476c6c'
     },
     '>div': {
-      padding: '0 0.5rem'
+      padding: '0 0.5rem',
+      height: '100%'
     }
   }),
   placeholder: (provided, state) => ({
@@ -62,18 +65,20 @@ const selectStyles = {
   }),
   singleValue: (provided, state) => ({
     ...provided,
-    color: '#f0f0f0'
+    color: '#f0f0f0',
+    margin: 0
   }),
   menu: (provided, state) => ({
     ...provided,
     backgroundColor: '#212e2e',
     borderRadius: '0.3rem',
     width: 146,
-    margin: '10px 0'
+    margin: '10px 0',
+    border: '1px solid #233130'
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor:  state.isSelected ? '#476c6c' : null,
+    backgroundColor: state.isSelected ? '#476c6c' : null,
     color: state.isSelected ? '#f0f0f0' : null,
     '&:hover': {
       backgroundColor: '#476c6c',
@@ -90,6 +95,10 @@ type Props = {
 
 const handleChange = () => {
   console.log('jhfdsjkhjks')
+}
+
+const handleDateChangeRaw = e => {
+  e.preventDefault()
 }
 
 const graphs = [
@@ -109,21 +118,26 @@ const Header: FunctionComponent<Props> = ({ ready, readings }) => {
         {ready &&
         <>
           <Col>
+            <label className="header-label">Start date:</label>
             <DatePicker
               showPopperArrow={false}
               selected={readings[readings.length - 1].date}
               onChange={handleChange}
+              onChangeRaw={handleDateChangeRaw}
             />
           </Col>
           <Col>
+            <label className="header-label">End date:</label>
             <DatePicker
               showPopperArrow={false}
               selected={readings[0].date}
               onChange={handleChange}
+              onChangeRaw={handleDateChangeRaw}
             />
           </Col>
           <Col>
-            <Select styles={selectStyles} options={graphs} />
+            <label className="header-label graph-type-label">Graph type:</label>
+            <Select isSearchable={false} styles={selectStyles} options={graphs} />
           </Col>
         </>
         }
