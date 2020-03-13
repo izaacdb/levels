@@ -12,12 +12,20 @@ type Props = {
   pending: boolean
 }
 
+const Loading = styled.div`
+  width: 100%;
+  background-color: #171717;
+  border: 1px solid #223130;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const GraphWrapper = styled.div`
   width: 100%;
   overflow: scroll;
   background-color: #171717;
   border: 1px solid #223130;
-  //box-sizing: border-box;
 `
 
 const HomePage: FunctionComponent<Props> = ({ readings, getReadingsThunk, pending }) => {
@@ -25,17 +33,20 @@ const HomePage: FunctionComponent<Props> = ({ readings, getReadingsThunk, pendin
     getReadingsThunk()
   }
   if (pending) {
-    return <div>Loading...</div>
+    return (
+      <Loading>
+        <div className="spinner">
+          <div className="cube1" />
+          <div className="cube2" />
+        </div>
+      </Loading>
+    )
   }
 
   return (
     <GraphWrapper>
-      <Graph data={readings}
-             margin={30}
-             width={1024}
-             height={360} />
+      <Graph data={readings} margin={30} width={1024} height={360} />
     </GraphWrapper>
-
   )
 }
 
@@ -48,7 +59,4 @@ function mapStateToProps(state: ReduxState) {
 
 const mapDispatchToProps = { getReadingsThunk }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomePage)
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)

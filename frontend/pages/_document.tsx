@@ -33,8 +33,8 @@ export default class InitialDocument extends Document {
       <Html>
         <Head />
         <body>
-        <Main />
-        <NextScript />
+          <Main />
+          <NextScript />
         </body>
       </Html>
     )

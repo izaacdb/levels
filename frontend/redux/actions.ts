@@ -17,13 +17,14 @@ export const readingsGetFailed = (error: string) => {
 export function getReadingsThunk() {
   return dispatch => {
     dispatch(readingsGetPending())
-    readingsGet()
-      .then(readings => {
+    readingsGet().then(readings => {
+      setTimeout(() => {
         if (readings.length > 0) {
           dispatch(readingsGetSuccess(readings))
         } else {
           dispatch(readingsGetFailed('No results from API'))
         }
-      })
+      }, 10000)
+    })
   }
 }

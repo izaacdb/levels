@@ -10,16 +10,16 @@ const Container = styled.ul`
 
 const Item = styled.li`
   margin: 0 0 1rem;
-  @media (min-width: 800px){
+  @media (min-width: 800px) {
     margin-right: 1rem;
-    display:inline-block;
+    display: inline-block;
   }
 `
 
 const Label = styled.label`
-  margin-right: 1rem;    
-  @media (max-width: 799px){
-    display:inline-block;
+  margin-right: 1rem;
+  @media (max-width: 799px) {
+    display: inline-block;
     min-width: 7rem;
   }
 `
@@ -37,7 +37,7 @@ type Props = {
 
 const Footer: FunctionComponent<Props> = ({ readings }) => {
   const sgvs = readings.map(r => r.sgv)
-  const total = readings.reduce((acc, r) => acc += r.sgv, 0)
+  const total = readings.reduce((acc, r) => (acc += r.sgv), 0)
   const mean = total / readings.length
   const max = Math.max(...sgvs)
   const min = Math.min(...sgvs)
@@ -60,7 +60,6 @@ const Footer: FunctionComponent<Props> = ({ readings }) => {
   )
 }
 
-
 function mapStateToProps(state: ReduxState) {
   return {
     ready: state.readings?.data?.length > 0 && !state.readings.pending,
@@ -70,8 +69,4 @@ function mapStateToProps(state: ReduxState) {
 
 const mapDispatchToProps = {}
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Footer)
-
+export default connect(mapStateToProps, mapDispatchToProps)(Footer)

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const ErrorDiv = styled.div`
   display: flex;
-  
   justify-content: center;
   align-items: flex-start;
   font-family: 'IBM Plex Sans', sans-serif;
@@ -25,9 +24,7 @@ export default class Error extends React.Component<Props> {
   render() {
     return (
       <ErrorDiv>
-        {this.props.statusCode
-          ? `A ${this.props.statusCode} error occurred.`
-          : `An unspecified error occurred.`}
+        {this.props.statusCode ? `A ${this.props.statusCode} error occurred.` : `An unspecified error occurred.`}
       </ErrorDiv>
     )
   }

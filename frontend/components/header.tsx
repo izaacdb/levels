@@ -24,7 +24,7 @@ const Container = styled.div`
 const Col = styled.li`
   color: #f0f0f0;
   margin: 0 1rem 1rem 0;
-  @media (min-width: 800px){
+  @media (min-width: 800px) {
     display: inline-block;
   }
 `
@@ -87,7 +87,8 @@ const selectStyles = {
     }
   }),
   menuList: (provided, state) => ({
-    ...provided, padding: 0
+    ...provided,
+    padding: 0
   })
 }
 
@@ -118,38 +119,36 @@ const Header: FunctionComponent<Props> = ({ ready, readings }) => {
       <H2>Latest CGM reading: {ready ? new Date(readings[readings.length - 1].date).toUTCString() : 'Loading'}</H2>
 
       <Nav>
-        {ready &&
-        <>
-          <Col>
-            <label className="header-label">Start date:</label>
-            <DatePicker
-              showPopperArrow={false}
-              selected={readings[readings.length - 1].date}
-              onChange={handleChange}
-              onChangeRaw={handleDateChangeRaw}
-            />
-          </Col>
-          <Col>
-            <label className="header-label">End date:</label>
-            <DatePicker
-              showPopperArrow={false}
-              selected={readings[0].date}
-              onChange={handleChange}
-              onChangeRaw={handleDateChangeRaw}
-            />
-          </Col>
-          <Col>
-            <label className="header-label graph-type-label">Graph type:</label>
-            <Select isSearchable={false} styles={selectStyles} options={graphs} />
-          </Col>
-        </>
-        }
+        {ready && (
+          <>
+            <Col>
+              <label className="header-label">Start date:</label>
+              <DatePicker
+                showPopperArrow={false}
+                selected={readings[readings.length - 1].date}
+                onChange={handleChange}
+                onChangeRaw={handleDateChangeRaw}
+              />
+            </Col>
+            <Col>
+              <label className="header-label">End date:</label>
+              <DatePicker
+                showPopperArrow={false}
+                selected={readings[0].date}
+                onChange={handleChange}
+                onChangeRaw={handleDateChangeRaw}
+              />
+            </Col>
+            <Col>
+              <label className="header-label graph-type-label">Graph type:</label>
+              <Select isSearchable={false} styles={selectStyles} options={graphs} />
+            </Col>
+          </>
+        )}
       </Nav>
-
     </Container>
   )
 }
-
 
 function mapStateToProps(state: ReduxState) {
   return {
@@ -160,8 +159,4 @@ function mapStateToProps(state: ReduxState) {
 
 const mapDispatchToProps = {}
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header)
-
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

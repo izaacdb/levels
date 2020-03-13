@@ -11,7 +11,8 @@ export type Reading = {
 }
 
 export const readingsGet = (): Promise<Reading[]> => {
-  return axios.get(readings)
+  return axios
+    .get(readings)
     .then(response => {
       return response.data.map(r => ({ ...r, sgv: r.sgv * 0.0555 }))
     })

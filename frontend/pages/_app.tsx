@@ -14,13 +14,12 @@ import Background from '../components/background'
 
 const Container = styled.div`
   padding: 1rem;
-  max-width:1024px;
+  max-width: 1024px;
   margin: 0 auto;
   box-sizing: content-box;
 `
 
 export class Mobile extends App<any> {
-
   constructor(props) {
     super(props)
   }

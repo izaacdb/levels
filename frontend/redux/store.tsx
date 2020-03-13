@@ -18,8 +18,7 @@ function getOrCreateStore(initialState) {
 }
 
 async function getInitialState() {
-  return {
-  }
+  return {}
 }
 
 export default App => {

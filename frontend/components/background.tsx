@@ -9,20 +9,20 @@ const Stripes = styled.div`
   top: 0;
   transform: skewY(-12deg);
   transform-origin: 0;
-  background: linear-gradient(#171717 0,#192323 100%);
+  background: linear-gradient(#171717 0, #192323 100%);
   grid: repeat(5, 200px) / repeat(10, 1fr);
-  span:nth-child(1){
+  span:nth-child(1) {
     grid-column: span 10;
-    background: linear-gradient(100grad,#171717 30%,#243737);
+    background: linear-gradient(100grad, #171717 30%, #243737);
   }
-  span:nth-child(2){
+  span:nth-child(2) {
     grid-area: 3 / span 4 / auto / -1;
-    background: linear-gradient(100grad,#181d1d 10%,#192323);
+    background: linear-gradient(100grad, #181d1d 10%, #192323);
   }
   span:nth-child(3) {
     grid-row: 4;
     grid-column: span 5;
-    background: linear-gradient(100grad,#171717,#192323 150%);
+    background: linear-gradient(100grad, #171717, #192323 150%);
   }
 `
 

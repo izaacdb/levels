@@ -1,18 +1,17 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-
 import thunk from 'redux-thunk'
 import { Reading } from './api'
 
 export enum ActionTypes {
   READINGS_GET_SUCCESS = '[Readings] DB retrieval succeeded',
   READINGS_GET_PENDING = '[Readings] DB retrieval pending',
-  READINGS_GET_FAILED = '[Readings] DB retrieval failed',
+  READINGS_GET_FAILED = '[Readings] DB retrieval failed'
 }
 
 export interface ReduxState {
-  readings: { data: Reading[], pending: boolean, error: string }
+  readings: { data: Reading[]; pending: boolean; error: string }
   getState: () => void
 }
 
@@ -27,7 +26,6 @@ const initialReadingState: ReduxState['readings'] = {
   pending: false,
   error: null
 }
-
 
 export const readingsReducer = (state: ReduxState['readings'] = initialReadingState, action: Action<Reading[]>) => {
   switch (action.type) {
@@ -58,8 +56,6 @@ const rootReducer = combineReducers({
 })
 
 const middleWares = [thunk]
-
-
 
 export function initializeStore(initialState) {
   return createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...middleWares)))
