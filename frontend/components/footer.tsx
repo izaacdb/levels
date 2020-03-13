@@ -4,9 +4,33 @@ import { connect } from 'react-redux'
 import { ReduxState } from '../redux'
 import { Reading } from '../redux/api'
 
-const Container = styled.div`
+const Container = styled.ul`
   margin: 1rem 0;
 `
+
+const Item = styled.li`
+  margin: 0 0 1rem;
+  @media (min-width: 800px){
+    margin-right: 1rem;
+    display:inline-block;
+  }
+`
+
+const Label = styled.label`
+  margin-right: 1rem;    
+  @media (max-width: 799px){
+    display:inline-block;
+    min-width: 7rem;
+  }
+`
+
+const Value = styled.div`
+  display: inline-block;
+  border-bottom: 1px solid #476c6c;
+  width: 1.75rem;
+  text-align: center;
+`
+
 type Props = {
   readings: Reading[]
 }
@@ -20,9 +44,18 @@ const Footer: FunctionComponent<Props> = ({ readings }) => {
 
   return (
     <Container>
-      Mean average: {mean.toFixed(1)}<br />
-      Maximum reading: {max.toFixed(1)}<br />
-      Minimum reading: {min.toFixed(1)}
+      <Item>
+        <Label>Mean average:</Label>
+        <Value>{mean.toFixed(1)}</Value>
+      </Item>
+      <Item>
+        <Label>Maximum reading:</Label>
+        <Value>{max.toFixed(1)}</Value>
+      </Item>
+      <Item>
+        <Label>Minimum reading:</Label>
+        <Value>{min.toFixed(1)}</Value>
+      </Item>
     </Container>
   )
 }

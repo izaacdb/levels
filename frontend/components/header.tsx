@@ -24,7 +24,7 @@ const Container = styled.div`
 const Col = styled.li`
   color: #f0f0f0;
   margin: 0 1rem 1rem 0;
-  @media (min-width: 768px){
+  @media (min-width: 800px){
     display: inline-block;
   }
 `
@@ -71,10 +71,10 @@ const selectStyles = {
   menu: (provided, state) => ({
     ...provided,
     backgroundColor: '#212e2e',
-    borderRadius: '0.3rem',
+    border: '1px solid #466b6c',
+    borderRadius: '0',
     width: 146,
-    margin: '10px 0',
-    border: '1px solid #233130'
+    margin: '10px 0'
   }),
   option: (provided, state) => ({
     ...provided,
@@ -85,6 +85,9 @@ const selectStyles = {
       color: '#f0f0f0',
       cursor: 'pointer'
     }
+  }),
+  menuList: (provided, state) => ({
+    ...provided, padding: 0
   })
 }
 

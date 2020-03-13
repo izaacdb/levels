@@ -15,8 +15,10 @@ export const BaseStyles = createGlobalStyle`
   .react-datepicker{
     background-color: #212e2e;
     color: #fff;
-    border: 1px solid #192222;
-    box-shadow: none
+    //border: 1px solid #192222;
+    box-shadow: none;
+    border: 1px solid #466b6c;
+    border-radius: 0;
   }
   .react-datepicker__header{
     background-color: #192121;
@@ -25,10 +27,12 @@ export const BaseStyles = createGlobalStyle`
   .react-datepicker__day{
     color: #f0f0f0;
     outline:none;
+    border-radius: 0;
     &:hover{
       background-color: #476c6c;
       border-color: #476c6c;
       color: #f0f0f0;
+      border-radius: 0;
     }
   }
   .react-datepicker__current-month{
@@ -64,12 +68,16 @@ export const BaseStyles = createGlobalStyle`
     border-color: #476c6c!important;
   }
   .graph-type-label + div{
-    @media (min-width: 768px){
-      display:inline-block;
-    }
+    display:inline-block;
   }
   .header-label{
-    margin-right: 1rem;
+    display: inline-block;
+    @media (max-width: 799px){
+      min-width:5rem;
+    }
+    @media (min-width: 800px){
+      margin-right: 1rem;
+    }
     + div {
       margin-right: 1rem;
     }
