@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
-import { Reading } from '../redux/api'
+import { Reading } from '../services/api'
 
 type Props = {
   data: Reading[]
@@ -53,6 +53,8 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .attr('y2', margin * 2 + plotHeight * 0.45)
       .attr('stroke', '#ffc107')
       .attr('stroke-width', 0.5)
+
+    // actual graph data vvv
 
     const xMin = d3.min(data, d => Math.min(d.date))
     const xMax = d3.max(data, d => Math.max(d.date))
@@ -108,6 +110,8 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .attr('transform', 'translate(0, ' + (height - margin) + ')')
       .attr('stroke', '#f0f0f0')
       .attr('font-weight', 300)
+
+
   }, [svgRef])
 
   return <svg ref={svgRef} />

@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
+import Particles from 'react-particles-js'
 
 const Stripes = styled.div`
   position: absolute;
@@ -28,11 +29,23 @@ const Stripes = styled.div`
 
 const Background: FunctionComponent = () => {
   return (
-    <Stripes>
-      <span />
-      <span />
-      <span />
-    </Stripes>
+    <>
+      <Particles
+        style={{position: 'absolute', width: '100%', height: '100%'}}
+        params={{
+          particles: {
+            line_linked: {
+              enable: false
+            }
+          }
+        }}
+      />
+      <Stripes>
+        <span />
+        <span />
+        <span />
+      </Stripes>
+    </>
   )
 }
 

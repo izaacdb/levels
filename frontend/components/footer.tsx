@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { ReduxState } from '../redux'
-import { Reading } from '../redux/api'
+import { Reading } from '../services/api'
 
 const Container = styled.ul`
   margin: 1rem 0;
@@ -33,9 +33,10 @@ const Value = styled.div`
 
 type Props = {
   readings: Reading[]
+  ready: boolean
 }
 
-const Footer: FunctionComponent<Props> = ({ readings }) => {
+const Footer: FunctionComponent<Props> = ({ readings, ready }) => {
   const sgvs = readings.map(r => r.sgv)
   const total = readings.reduce((acc, r) => (acc += r.sgv), 0)
   const mean = total / readings.length
@@ -44,18 +45,22 @@ const Footer: FunctionComponent<Props> = ({ readings }) => {
 
   return (
     <Container>
-      <Item>
-        <Label>Mean average:</Label>
-        <Value>{mean.toFixed(1)}</Value>
-      </Item>
-      <Item>
-        <Label>Maximum reading:</Label>
-        <Value>{max.toFixed(1)}</Value>
-      </Item>
-      <Item>
-        <Label>Minimum reading:</Label>
-        <Value>{min.toFixed(1)}</Value>
-      </Item>
+      {ready && (
+        <>
+          <Item>
+            <Label>Mean average:</Label>
+            <Value>{mean.toFixed(1)}</Value>
+          </Item>
+          <Item>
+            <Label>Maximum reading:</Label>
+            <Value>{max.toFixed(1)}</Value>
+          </Item>
+          <Item>
+            <Label>Minimum reading:</Label>
+            <Value>{min.toFixed(1)}</Value>
+          </Item>
+        </>
+      )}
     </Container>
   )
 }

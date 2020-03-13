@@ -2,7 +2,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import thunk from 'redux-thunk'
-import { Reading } from './api'
+import { Reading } from '../services/api'
 
 export enum ActionTypes {
   READINGS_GET_SUCCESS = '[Readings] DB retrieval succeeded',

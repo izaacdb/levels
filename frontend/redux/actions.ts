@@ -1,5 +1,5 @@
 import { ActionTypes } from './index'
-import { readingsGet } from './api'
+import { readingsGet } from '../services/api'
 
 export const readingsGetSuccess = (data: any[]) => {
   return { type: ActionTypes.READINGS_GET_SUCCESS, data }
@@ -24,7 +24,7 @@ export function getReadingsThunk() {
         } else {
           dispatch(readingsGetFailed('No results from API'))
         }
-      }, 10000)
+      }, 700)
     })
   }
 }

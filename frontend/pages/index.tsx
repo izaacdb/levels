@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { ReduxState } from '../redux'
 import { getReadingsThunk } from '../redux/actions'
-import { Reading } from '../redux/api'
+import { Reading } from '../services/api'
 import Graph from '../components/graph'
 
 type Props = {

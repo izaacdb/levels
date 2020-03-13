@@ -1,8 +1,5 @@
 import axios from 'axios'
 
-const readings = 'http://192.168.1.71:9000/mongo'
-//https://healthbar-lambdas.netlify.com/.netlify/functions/mongo'
-
 export type Reading = {
   sgv: number
   date: number
@@ -10,9 +7,22 @@ export type Reading = {
   rssi: number
 }
 
+const env = process.env.NODE_ENV || 'development'
+
+const getMongoURL = () => {
+  switch(env){
+    case 'production':
+      return 'https://healthbar-lambdas.netlify.com/.netlify/functions/mongo'
+    case 'development':
+    case 'test':
+    default:
+      return 'http://192.168.1.71:9000/mongo'
+  }
+}
+
 export const readingsGet = (): Promise<Reading[]> => {
   return axios
-    .get(readings)
+    .get(getMongoURL())
     .then(response => {
       return response.data.map(r => ({ ...r, sgv: r.sgv * 0.0555 }))
     })

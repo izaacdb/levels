@@ -92,7 +92,7 @@ export const BaseStyles = createGlobalStyle`
   }
 
   .cube1, .cube2 {
-    background-color: #333;
+    background-color: #466b6c;
     width: 15px;
     height: 15px;
     position: absolute;
@@ -133,4 +133,7 @@ export const BaseStyles = createGlobalStyle`
     }
   }
   
+  text{
+    font-weight: 300;
+  }
 `

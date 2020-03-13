@@ -12,6 +12,13 @@ import Header from '../components/header'
 import Footer from '../components/footer'
 import Background from '../components/background'
 
+const Wrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+`
+
 const Container = styled.div`
   padding: 1rem;
   max-width: 1024px;
@@ -37,11 +44,13 @@ export class Mobile extends App<any> {
         <BaseStyles />
         <Provider store={reduxStore}>
           <Background />
-          <Container>
-            <Header />
-            <Component {...pageProps} style={{ position: 'fixed' }} />
-            <Footer />
-          </Container>
+          <Wrapper>
+            <Container>
+              <Header />
+              <Component {...pageProps} style={{ position: 'fixed' }} />
+              <Footer />
+            </Container>
+          </Wrapper>
         </Provider>
       </>
     )

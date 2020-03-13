@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import DatePicker from 'react-datepicker'
 import { ReduxState } from '../redux'
-import { Reading } from '../redux/api'
+import { Reading } from '../services/api'
 
 const H1 = styled.h1`
   font-size: 1rem;
@@ -116,7 +116,7 @@ const Header: FunctionComponent<Props> = ({ ready, readings }) => {
   return (
     <Container>
       <H1>Levels</H1>
-      <H2>Latest CGM reading: {ready ? new Date(readings[readings.length - 1].date).toUTCString() : 'Loading'}</H2>
+      <H2> {ready ? `Latest CGM reading: ${new Date(readings[readings.length - 1].date).toUTCString()}` : 'Loading data, please wait'}</H2>
 
       <Nav>
         {ready && (
