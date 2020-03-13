@@ -12,7 +12,7 @@ const env = process.env.NODE_ENV || 'development'
 const getMongoURL = () => {
   switch(env){
     case 'production':
-      return 'https://healthbar-lambdas.netlify.com/.netlify/functions/mongo'
+      return 'https://levels-lambdas.netlify.com/.netlify/functions/mongo'
     case 'development':
     case 'test':
     default:
