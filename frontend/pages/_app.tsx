@@ -20,11 +20,9 @@ const Container = styled.div`
 `
 
 export class Mobile extends App<any> {
-  private persistor
 
   constructor(props) {
     super(props)
-    this.persistor = persistStore(props.reduxStore)
   }
 
   render() {
@@ -39,14 +37,12 @@ export class Mobile extends App<any> {
         </Head>
         <BaseStyles />
         <Provider store={reduxStore}>
-          <PersistGate loading={<Component {...pageProps} />} persistor={this.persistor}>
-            <Background />
-            <Container>
-              <Header />
-              <Component {...pageProps} style={{ position: 'fixed' }} />
-              <Footer />
-            </Container>
-          </PersistGate>
+          <Background />
+          <Container>
+            <Header />
+            <Component {...pageProps} style={{ position: 'fixed' }} />
+            <Footer />
+          </Container>
         </Provider>
       </>
     )

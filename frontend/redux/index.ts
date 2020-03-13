@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+
+
 import thunk from 'redux-thunk'
 import { Reading } from './api'
 
@@ -59,14 +59,8 @@ const rootReducer = combineReducers({
 
 const middleWares = [thunk]
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  whitelist: ['readings']
-}
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export function initializeStore(initialState) {
-  return createStore(persistedReducer, initialState, composeWithDevTools(applyMiddleware(...middleWares)))
+  return createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...middleWares)))
 }
