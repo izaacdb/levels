@@ -16,6 +16,11 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
     console.log('graph effect')
     svgRef.current.innerHTML = ''
 
+    const transition = d3
+      .transition()
+      .duration(300)
+      .ease(d3.easeLinear)
+
     const chart = d3.select(svgRef.current)
 
     const timeFormat = d3.timeFormat('%a, %H:%M')
@@ -74,7 +79,8 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
 
     const xAxis = d3
       .axisBottom(xScale)
-      .ticks(5)
+      .ticks(10)
+      .tickSizeOuter(0)
       .tickPadding(5)
       .tickFormat(timeFormat)
 
@@ -83,10 +89,15 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .data(data)
       .enter()
       .append('svg:circle')
-      .attr('r', 1)
       .attr('stroke-opacity', 0)
+      .attr('r', 1)
+      .attr('cx', d => xScale(0))
+      .attr('cy', d => yScale(0))
+      .transition(transition)
+      .delay((d, i) => i * 2.5)
       .attr('cx', d => xScale(d.date))
       .attr('cy', d => yScale(d.sgv))
+
 
       .style('fill', d => {
         if (d.sgv > 9) {
@@ -110,8 +121,6 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .attr('transform', 'translate(0, ' + (height - margin) + ')')
       .attr('stroke', '#f0f0f0')
       .attr('font-weight', 300)
-
-
   }, [svgRef])
 
   return <svg ref={svgRef} />

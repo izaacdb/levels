@@ -41,8 +41,8 @@ export class Mobile extends App<any> {
         </Head>
         <BaseStyles />
         <Provider store={reduxStore}>
+          <Background />
           <Wrapper>
-            <Background />
             <Container>
               <Header />
               <Component {...pageProps} />
