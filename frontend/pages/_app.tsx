@@ -2,8 +2,6 @@ import React from 'react'
 import App from 'next/app'
 import Head from 'next/head'
 import { Provider } from 'react-redux'
-import { persistStore } from 'redux-persist'
-import { PersistGate } from 'redux-persist/integration/react'
 import styled from 'styled-components'
 import 'react-datepicker/dist/react-datepicker.css'
 import withReduxStore from '../redux/store'
@@ -43,11 +41,11 @@ export class Mobile extends App<any> {
         </Head>
         <BaseStyles />
         <Provider store={reduxStore}>
-          <Background />
           <Wrapper>
+            <Background />
             <Container>
               <Header />
-              <Component {...pageProps} style={{ position: 'fixed' }} />
+              <Component {...pageProps} />
               <Footer />
             </Container>
           </Wrapper>
