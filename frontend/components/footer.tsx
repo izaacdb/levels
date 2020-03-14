@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { ReduxState } from '../redux'
 import { Reading } from '../services/api'
+import { cyan } from './styles'
 
 const Container = styled.ul`
   margin: 1rem 0;
@@ -26,7 +27,7 @@ const Label = styled.label`
 
 const Value = styled.div`
   display: inline-block;
-  border-bottom: 1px solid #476c6c;
+  border-bottom: 1px solid ${cyan};
   width: 1.75rem;
   text-align: center;
 `

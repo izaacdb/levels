@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
 import { Reading } from '../services/api'
+import { high, low, lowBorder, lowDot, normalDot, white } from './styles'
 
 type Props = {
   data: Reading[]
@@ -38,7 +39,7 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .attr('y', yPosOfXAxis) // 360 - 30
       .attr('width', plotWidth)
       .attr('height', plotHeight * 0.22)
-      .attr('fill', '#400d02')
+      .attr('fill', lowBorder)
       .attr('opacity', 1)
 
     chart
@@ -47,7 +48,7 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .attr('y1', yPosOfXAxis)
       .attr('x2', plotWidth + margin)
       .attr('y2', yPosOfXAxis)
-      .attr('stroke', '#ca0000')
+      .attr('stroke', low)
       .attr('stroke-width', 0.5)
 
     chart
@@ -56,7 +57,7 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .attr('y1', margin * 2 + plotHeight * 0.45) // 30 + 135
       .attr('x2', plotWidth + margin)
       .attr('y2', margin * 2 + plotHeight * 0.45)
-      .attr('stroke', '#ffc107')
+      .attr('stroke', high)
       .attr('stroke-width', 0.5)
 
     // actual graph data vvv
@@ -98,28 +99,27 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .attr('cx', d => xScale(d.date))
       .attr('cy', d => yScale(d.sgv))
 
-
       .style('fill', d => {
         if (d.sgv > 9) {
-          return '#ffc107'
+          return high
         } else if (d.sgv < 4.3) {
-          return '#ff5722'
+          return lowDot
         }
-        return '#00bcd4'
+        return normalDot
       })
 
     chart
       .append('g')
       .call(yAxis)
       .attr('transform', `translate(${margin}, 0)`)
-      .attr('stroke', '#f0f0f0')
+      .attr('stroke', white)
       .attr('font-weight', 300)
 
     chart
       .append('g')
       .call(xAxis)
       .attr('transform', 'translate(0, ' + (height - margin) + ')')
-      .attr('stroke', '#f0f0f0')
+      .attr('stroke', white)
       .attr('font-weight', 300)
   }, [svgRef])
 

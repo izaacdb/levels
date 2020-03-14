@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import DatePicker from 'react-datepicker'
 import { ReduxState } from '../redux'
 import { Reading } from '../services/api'
+import { blackBg, cyan, selectBg, selectBorder, teal, white } from './styles'
 
 const H1 = styled.h1`
   font-size: 1rem;
@@ -22,7 +23,7 @@ const Container = styled.div`
   margin: 1rem 0 0;
 `
 const Col = styled.li`
-  color: #f0f0f0;
+  color: ${white};
   margin: 0 1rem 1rem 0;
   @media (min-width: 800px) {
     display: inline-block;
@@ -38,8 +39,8 @@ const selectStyles = {
   }),
   control: (provided, state) => ({
     ...provided,
-    backgroundColor: '#171717',
-    borderColor: state.menuIsOpen ? '#476c6c' : '#233130',
+    backgroundColor: blackBg,
+    borderColor: state.menuIsOpen ? cyan : selectBorder,
     borderRadius: 0,
     boxShadow: 'none',
     minHeight: 0,
@@ -48,7 +49,7 @@ const selectStyles = {
     width: 146,
     cursor: 'pointer',
     '&:hover': {
-      borderColor: '#476c6c'
+      borderColor: cyan
     },
     '>div': {
       padding: '0 0.5rem',
@@ -57,7 +58,7 @@ const selectStyles = {
   }),
   placeholder: (provided, state) => ({
     ...provided,
-    color: '#f0f0f0',
+    color: white,
     fontSize: '0.8rem'
   }),
   indicatorsContainer: () => ({
@@ -65,24 +66,24 @@ const selectStyles = {
   }),
   singleValue: (provided, state) => ({
     ...provided,
-    color: '#f0f0f0',
+    color: white,
     margin: 0
   }),
   menu: (provided, state) => ({
     ...provided,
-    backgroundColor: '#212e2e',
-    border: '1px solid #466b6c',
+    backgroundColor: selectBg,
+    border: `1px solid ${teal}`,
     borderRadius: '0',
     width: 146,
     margin: '10px 0'
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isSelected ? '#476c6c' : null,
-    color: state.isSelected ? '#f0f0f0' : null,
+    backgroundColor: state.isSelected ? cyan : null,
+    color: state.isSelected ? white : null,
     '&:hover': {
-      backgroundColor: '#476c6c',
-      color: '#f0f0f0',
+      backgroundColor: cyan,
+      color: white,
       cursor: 'pointer'
     }
   }),

@@ -1,74 +1,91 @@
 import { createGlobalStyle } from 'styled-components'
 import reset from 'styled-reset'
 
+export const white = '#f0f0f0'
+export const blackBg = '#171717'
+export const offBlackBg = '#1a2322'
+export const selectBg = '#212e2e'
+export const selectHeadBg = '#192121'
+export const selectBorder = '#233130'
+export const teal = '#466b6c'
+export const cyan = '#476c6c'
+export const aqua = '#76a9a9'
+export const dark = '#192323'
+export const dingy = '#181d1d'
+export const lowBorder = '#400d02'
+export const low = '#ca0000'
+export const lowDot = '#ff5722'
+export const high = '#ffc107'
+export const normalDot = '#00bcd4'
+export const graphBorder = '#223130'
+
 export const BaseStyles = createGlobalStyle`
   ${reset}
   ::selection {
-    background-color:#76a9a9;
+    background-color:${aqua};
   }
   body{
     box-sizing: border-box;
     font-family: 'IBM Plex Sans', sans-serif;
-    background-color: #1a2322;
-    color: #f0f0f0;
+    background-color: ${offBlackBg};
+    color: ${white};
     line-height: 1.4;
     font-size: 0.8rem;
   }
   textarea, select, input, button { outline: none; }
   .react-datepicker{
-    background-color: #212e2e;
-    color: #fff;
-    //border: 1px solid #192222;
+    background-color: ${selectBg};
+    color: ${white};
     box-shadow: none;
-    border: 1px solid #466b6c;
+    border: 1px solid ${teal};
     border-radius: 0;
   }
   .react-datepicker__header{
-    background-color: #192121;
-    border-bottom: 1px solid #233130;
+    background-color: ${selectHeadBg};
+    border-bottom: 1px solid ${selectBorder};
   }
   .react-datepicker__day{
-    color: #f0f0f0;
+    color: ${white};
     outline:none;
     border-radius: 0;
     &:hover{
-      background-color: #476c6c;
-      border-color: #476c6c;
-      color: #f0f0f0;
+      background-color: ${cyan};
+      border-color: ${cyan};
+      color: ${white};
       border-radius: 0;
     }
   }
   .react-datepicker__current-month{
-    color: #f0f0f0;
+    color: ${white};
     font-size:0.8rem;
     font-family: 'IBM Plex Sans', sans-serif;
   }
   .react-datepicker__day-name{
-    color: #f0f0f0;
+    color: ${white};
     font-size:0.8rem;
     font-family: 'IBM Plex Sans', sans-serif;
   }
   .react-datepicker__day--selected{
-    background-color: #476c6c;
-    border-color: #476c6c;
+    background-color: ${cyan};
+    border-color: ${cyan};
   }
   .react-datepicker__input-container input{
     cursor: pointer;
     width: 8rem;
-    background: #171717;
-    border: 1px solid #233130;
+    background: ${blackBg};
+    border: 1px solid ${selectBorder};
     padding: 0.5rem;
-    color: #f0f0f0;
+    color: ${white};
     box-shadow: none;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 0.8rem;
     caret-color: transparent;
     &:hover{
-      border-color: #476c6c;
+      border-color: ${cyan};
     }
   }
   .react-datepicker-ignore-onclickoutside{
-    border-color: #476c6c!important;
+    border-color: ${cyan}!important;
   }
   .graph-type-label + div{
     display:inline-block;
@@ -95,7 +112,7 @@ export const BaseStyles = createGlobalStyle`
   }
 
   .cube1, .cube2 {
-    background-color: #466b6c;
+    background-color: ${teal};
     width: 15px;
     height: 15px;
     position: absolute;

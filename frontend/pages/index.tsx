@@ -5,6 +5,7 @@ import { ReduxState } from '../redux'
 import { getReadingsThunk } from '../redux/actions'
 import { Reading } from '../services/api'
 import Graph from '../components/graph'
+import { blackBg, graphBorder } from '../components/styles'
 
 type Props = {
   readings: Reading[]
@@ -14,8 +15,8 @@ type Props = {
 
 const Loading = styled.div`
   width: 100%;
-  background-color: #171717;
-  border: 1px solid #223130;
+  background-color: ${blackBg};
+  border: 1px solid ${graphBorder};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,8 +25,8 @@ const Loading = styled.div`
 const GraphWrapper = styled.div`
   width: 100%;
   overflow: scroll;
-  background-color: #171717;
-  border: 1px solid #223130;
+  background-color: ${blackBg};
+  border: 1px solid ${graphBorder};
 `
 
 const HomePage: FunctionComponent<Props> = ({ readings, getReadingsThunk, pending }) => {
