@@ -18,13 +18,11 @@ export function getReadingsThunk() {
   return dispatch => {
     dispatch(readingsGetPending())
     readingsGet().then(readings => {
-      setTimeout(() => {
-        if (readings.length > 0) {
-          dispatch(readingsGetSuccess(readings))
-        } else {
-          dispatch(readingsGetFailed('No results from API'))
-        }
-      }, 700)
+      if (readings.length > 0) {
+        dispatch(readingsGetSuccess(readings))
+      } else {
+        dispatch(readingsGetFailed('No results from API'))
+      }
     })
   }
 }
