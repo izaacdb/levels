@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
-import styled  from 'styled-components'
+import styled from 'styled-components'
 import { Reading } from '../services/api'
 import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from './styles'
 
@@ -18,11 +18,11 @@ const Container = styled.div`
   border: 1px solid ${graphBorder};
 `
 
-const roundMinutes = (date: string) => {
+const roundMinutes = (date: number) => {
   const actualDate = new Date(date)
-  actualDate.setHours(actualDate.getHours() + Math.round(actualDate.getMinutes()/60));
-  actualDate.setMinutes(0);
-  return actualDate.getTime();
+  actualDate.setHours(actualDate.getHours() + Math.round(actualDate.getMinutes() / 60))
+  actualDate.setMinutes(0)
+  return actualDate.getTime()
 }
 
 const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
@@ -78,7 +78,7 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
     // actual graph data vvv
 
     const xMin = d3.min(data, d => Math.min(d.date))
-    const xMax = d3.max(data, d => Math.max(d.date))
+    const xMax = d3.max(data, d => Math.max(roundMinutes(d.date)))
 
     const xScale = d3
       .scaleTime()

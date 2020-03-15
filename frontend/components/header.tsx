@@ -73,7 +73,8 @@ const graphOptions = [
   { value: 'linear', label: 'Linear graph' },
   { value: 'overlayDays', label: 'Overlay days' },
   { value: 'overlayWeeks', label: 'Overlay weeks' },
-  { value: 'meanAverage', label: 'Mean average' }
+  { value: 'meanAverage', label: 'Mean average' },
+  {value: 'timeRange', label: 'Specific time range'}
 ]
 
 const getGraphType =(graphType: GraphType) => {

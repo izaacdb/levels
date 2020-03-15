@@ -56,9 +56,35 @@ const Reading = mongoose.model<IReading>('readings', ReadingSchema)
 
 export const getReadings = async (startDate: number, endDate: number) => {
   return Reading.find({
-    date: {
-      $gte: startDate,
-      $lte: endDate
+    $expr: {
+      $and: [
+        {
+          $gte: ['$date', startDate]
+        },
+        {
+          $lte: ['$date', endDate]
+        }
+        // {
+        //   $gte: [
+        //     {
+        //       $hour: {
+        //         $dateFromString: { dateString: '$dateString' }
+        //       }
+        //     },
+        //     20
+        //   ]
+        // },
+        // {
+        //   $lte: [
+        //     {
+        //       $hour: {
+        //         $dateFromString: { dateString: '$dateString' }
+        //       }
+        //     },
+        //     24
+        //   ]
+        // }
+      ]
     }
   }).select('sgv date rssi noise')
 }

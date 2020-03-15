@@ -12,13 +12,13 @@ const Container = styled.ul`
 const Item = styled.li`
   margin: 0 0 1rem;
   @media (min-width: 800px) {
-    margin-right: 1rem;
+    margin-right: 2rem;
     display: inline-block;
   }
 `
 
 const Label = styled.label`
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   @media (max-width: 799px) {
     display: inline-block;
     min-width: 7rem;
@@ -28,7 +28,7 @@ const Label = styled.label`
 const Value = styled.div`
   display: inline-block;
   border-bottom: 1px solid ${cyan};
-  width: 1.75rem;
+  width: 2rem;
   text-align: center;
 `
 
@@ -43,6 +43,15 @@ const Footer: FunctionComponent<Props> = ({ readings, ready }) => {
   const mean = total / readings.length
   const max = Math.max(...sgvs)
   const min = Math.min(...sgvs)
+  const low = []
+  const high = []
+  readings.forEach(r => {
+    if (r.sgv <= 4.5) {
+      low.push(r.sgv)
+    } else if (r.sgv >= 9){
+      high.push(r.sgv)
+    }
+  })
 
   return (
     <Container>
@@ -59,6 +68,14 @@ const Footer: FunctionComponent<Props> = ({ readings, ready }) => {
           <Item>
             <Label>Minimum reading:</Label>
             <Value>{min.toFixed(1)}</Value>
+          </Item>
+          <Item>
+            <Label>Low readings:</Label>
+            <Value>{((low.length / readings.length) * 100).toFixed(1)}%</Value>
+          </Item>
+          <Item>
+            <Label>High readings:</Label>
+            <Value>{((high.length / readings.length) * 100).toFixed(1)}%</Value>
           </Item>
         </>
       )}
