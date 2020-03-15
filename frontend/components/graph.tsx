@@ -1,7 +1,8 @@
 import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
+import styled  from 'styled-components'
 import { Reading } from '../services/api'
-import { high, low, lowBorder, lowDot, normalDot, white } from './styles'
+import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from './styles'
 
 type Props = {
   data: Reading[]
@@ -10,11 +11,25 @@ type Props = {
   margin: number
 }
 
+const Container = styled.div`
+  width: 100%;
+  overflow: scroll;
+  background-color: ${blackBg};
+  border: 1px solid ${graphBorder};
+`
+
+const roundMinutes = (date: string) => {
+  const actualDate = new Date(date)
+  actualDate.setHours(actualDate.getHours() + Math.round(actualDate.getMinutes()/60));
+  actualDate.setMinutes(0);
+  return actualDate.getTime();
+}
+
 const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
   const svgRef = createRef<SVGSVGElement>()
 
   useEffect(() => {
-    console.log('graph effect')
+    console.log(`Graph effect: ${data.length} data points`)
     svgRef.current.innerHTML = ''
 
     const transition = d3
@@ -24,7 +39,7 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
 
     const chart = d3.select(svgRef.current)
 
-    const timeFormat = d3.timeFormat('%a, %H:%M')
+    const timeFormat = d3.timeFormat('%H:%m')
 
     chart.attr('width', width).attr('height', height)
 
@@ -95,7 +110,7 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .attr('cx', d => xScale(0))
       .attr('cy', d => yScale(0))
       .transition(transition)
-      .delay((d, i) => i * 2.5)
+      .delay((d, i) => i * (1200 / data.length))
       .attr('cx', d => xScale(d.date))
       .attr('cy', d => yScale(d.sgv))
 
@@ -123,7 +138,11 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin }) => {
       .attr('font-weight', 300)
   }, [svgRef])
 
-  return <svg ref={svgRef} />
+  return (
+    <Container>
+      <svg ref={svgRef} />
+    </Container>
+  )
 }
 
 export default Graph

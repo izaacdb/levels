@@ -13,16 +13,19 @@ dotenv.config()
 const { DBUSER, DBPASSWORD, DBURL, DBPORT, DBNAME } = process.env
 const uri = `mongodb://${DBUSER}:${DBPASSWORD}@${DBURL}:${DBPORT}/${DBNAME}`
 
-mongoose.connect(uri).then(() => {
-  console.log('Successfully Connected!')
-}).catch(e => {
-  console.log(e.message)
-})
+mongoose
+  .connect(uri)
+  .then(() => {
+    console.log('Successfully Connected!')
+  })
+  .catch(e => {
+    console.log(e.message)
+  })
 
 export interface IReading extends mongoose.Document {
   _id: {
     $oid: string
-  },
+  }
   device: string
   date: number
   dateString: string
@@ -51,28 +54,26 @@ export const ReadingSchema = new mongoose.Schema({
 })
 const Reading = mongoose.model<IReading>('readings', ReadingSchema)
 
-
-export const getReadings = async () => {
-  console.log('here')
-  let lastWeek = (new Date() as any) - 2 * 60 * 60 * 24 * 1000
-  console.log(lastWeek)
-  console.log('pre readings')
+export const getReadings = async (startDate: number, endDate: number) => {
   return Reading.find({
     date: {
-      $gte: lastWeek
+      $gte: startDate,
+      $lte: endDate
     }
-  }).select('sgv date rssi noise' )
+  }).select('sgv date rssi noise')
 }
 
 export const handler: Handler = (event: APIGatewayEvent, context: Context, callback: Callback) => {
   console.log('Inside mongo handler')
-  return getReadings().then(readings => {
-    if (readings?.length > 0) {
-      console.log(`Retrieved ${readings.length} readings from database`, 200)
-      return wrap(readings)
-    } else {
-      console.log('Didn\'t retrieve any readings from DB query')
-      return wrap({ error: 'Didn\'t retrieve any readings from DB query' }, 400)
+  return getReadings(+event.queryStringParameters['startDate'], +event.queryStringParameters['endDate']).then(
+    readings => {
+      if (readings?.length > 0) {
+        console.log(`Retrieved ${readings.length} readings from database`, 200)
+        return wrap(readings)
+      } else {
+        console.log("Didn't retrieve any readings from DB query")
+        return wrap({ error: "Didn't retrieve any readings from DB query" }, 400)
+      }
     }
-  })
+  )
 }

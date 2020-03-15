@@ -19,6 +19,67 @@ export const high = '#ffc107'
 export const normalDot = '#00bcd4'
 export const graphBorder = '#223130'
 
+export const reactSelectStyles = {
+  container: (provided, state) => ({
+    ...provided,
+    width: '8rem'
+  }),
+  control: (provided, state) => ({
+    ...provided,
+    backgroundColor: blackBg,
+    borderColor: state.menuIsOpen ? cyan : selectBorder,
+    borderRadius: 0,
+    boxShadow: 'none',
+    minHeight: 0,
+    fontSize: '0.8rem',
+    height: 33,
+    width: 146,
+    cursor: 'pointer',
+    '&:hover': {
+      borderColor: cyan
+    },
+    '>div': {
+      padding: '0 0.5rem',
+      height: '100%'
+    }
+  }),
+  placeholder: (provided, state) => ({
+    ...provided,
+    color: white,
+    fontSize: '0.8rem'
+  }),
+  indicatorsContainer: () => ({
+    display: 'none'
+  }),
+  singleValue: (provided, state) => ({
+    ...provided,
+    color: white,
+    margin: 0
+  }),
+  menu: (provided, state) => ({
+    ...provided,
+    backgroundColor: selectBg,
+    border: `1px solid ${teal}`,
+    borderRadius: '0',
+    width: 146,
+    margin: '10px 0'
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? cyan : null,
+    color: state.isSelected ? white : null,
+    '&:hover': {
+      backgroundColor: cyan,
+      color: white,
+      cursor: 'pointer'
+    }
+  }),
+  menuList: (provided, state) => ({
+    ...provided,
+    padding: 0
+  })
+}
+
 export const BaseStyles = createGlobalStyle`
   ${reset}
   ::selection {
@@ -55,6 +116,15 @@ export const BaseStyles = createGlobalStyle`
       border-radius: 0;
     }
   }
+  .react-datepicker__day--disabled{
+    color: ${teal};
+    &:hover{
+      background-color: initial;
+      border-color: initial;
+      color: ${teal};
+      border-radius: initial;
+    }
+  }
   .react-datepicker__current-month{
     color: ${white};
     font-size:0.8rem;
@@ -86,71 +156,6 @@ export const BaseStyles = createGlobalStyle`
   }
   .react-datepicker-ignore-onclickoutside{
     border-color: ${cyan}!important;
-  }
-  .graph-type-label + div{
-    display:inline-block;
-  }
-  .header-label{
-    display: inline-block;
-    @media (max-width: 799px){
-      min-width:5rem;
-    }
-    @media (min-width: 800px){
-      margin-right: 1rem;
-    }
-    + div {
-      margin-right: 1rem;
-    }
-  }
-  
-  // loading animation
-  .spinner {
-    margin: 100px auto;
-    width: 40px;
-    height: 40px;
-    position: relative;
-  }
-
-  .cube1, .cube2 {
-    background-color: ${teal};
-    width: 15px;
-    height: 15px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
-    animation: sk-cubemove 1.8s infinite ease-in-out;
-  }
-  
-  .cube2 {
-    -webkit-animation-delay: -0.9s;
-    animation-delay: -0.9s;
-  }
-  
-  @-webkit-keyframes sk-cubemove {
-    25% { -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5) }
-    50% { -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg) }
-    75% { -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5) }
-    100% { -webkit-transform: rotate(-360deg) }
-  }
-  
-  @keyframes sk-cubemove {
-    25% { 
-      transform: translateX(42px) rotate(-90deg) scale(0.5);
-      -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
-    } 50% { 
-      transform: translateX(42px) translateY(42px) rotate(-179deg);
-      -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
-    } 50.1% { 
-      transform: translateX(42px) translateY(42px) rotate(-180deg);
-      -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
-    } 75% { 
-      transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
-      -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
-    } 100% { 
-      transform: rotate(-360deg);
-      -webkit-transform: rotate(-360deg);
-    }
   }
   
   text{

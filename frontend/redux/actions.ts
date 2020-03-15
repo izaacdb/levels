@@ -1,28 +1,23 @@
-import { ActionTypes } from './index'
-import { readingsGet } from '../services/api'
+import { ActionType, GraphType } from './index'
 
 export const readingsGetSuccess = (data: any[]) => {
-  return { type: ActionTypes.READINGS_GET_SUCCESS, data }
+  return { type: ActionType.READINGS_GET_SUCCESS, data }
 }
 
 export const readingsGetPending = () => {
-  return { type: ActionTypes.READINGS_GET_PENDING }
+  return { type: ActionType.READINGS_GET_PENDING }
 }
 export const readingsGetFailed = (error: string) => {
-  return { type: ActionTypes.READINGS_GET_FAILED, error }
+  return { type: ActionType.READINGS_GET_FAILED, error }
 }
 
-// thunks
+export const settingsStartChange = (data: number) => {
+  return { type: ActionType.SETTINGS_START_CHANGE, data }
+}
 
-export function getReadingsThunk() {
-  return dispatch => {
-    dispatch(readingsGetPending())
-    readingsGet().then(readings => {
-      if (readings.length > 0) {
-        dispatch(readingsGetSuccess(readings))
-      } else {
-        dispatch(readingsGetFailed('No results from API'))
-      }
-    })
-  }
+export const settingsEndChange = (data: number) => {
+  return { type: ActionType.SETTINGS_END_CHANGE, data }
+}
+export const settingsGraphChange = (data: GraphType) => {
+  return { type: ActionType.SETTINGS_GRAPH_CHANGE, data }
 }

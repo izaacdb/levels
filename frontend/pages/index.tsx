@@ -1,60 +1,36 @@
 import React, { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 import { ReduxState } from '../redux'
-import { getReadingsThunk } from '../redux/actions'
+import { getReadingsThunk } from '../redux/thunks'
 import { Reading } from '../services/api'
 import Graph from '../components/graph'
-import { blackBg, graphBorder } from '../components/styles'
+import Loading from '../components/loading'
 
 type Props = {
   readings: Reading[]
-  getReadingsThunk: () => void
+  getReadingsThunk: typeof getReadingsThunk
   pending: boolean
+  startDate: number
+  endDate: number
 }
 
-const Loading = styled.div`
-  width: 100%;
-  background-color: ${blackBg};
-  border: 1px solid ${graphBorder};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const GraphWrapper = styled.div`
-  width: 100%;
-  overflow: scroll;
-  background-color: ${blackBg};
-  border: 1px solid ${graphBorder};
-`
-
-const HomePage: FunctionComponent<Props> = ({ readings, getReadingsThunk, pending }) => {
+const HomePage: FunctionComponent<Props> = ({ readings, getReadingsThunk, pending, startDate, endDate }) => {
   if (readings.length === 0 && !pending) {
-    getReadingsThunk()
+    getReadingsThunk(startDate, endDate)
   }
   if (pending) {
-    return (
-      <Loading>
-        <div className="spinner">
-          <div className="cube1" />
-          <div className="cube2" />
-        </div>
-      </Loading>
-    )
+    return <Loading />
   }
 
-  return (
-    <GraphWrapper>
-      <Graph data={readings} margin={30} width={1024} height={360} />
-    </GraphWrapper>
-  )
+  return <Graph data={readings} margin={30} width={1024} height={360} />
 }
 
 function mapStateToProps(state: ReduxState) {
   return {
     readings: state.readings.data,
-    pending: state.readings.pending
+    pending: state.readings.pending,
+    startDate: state.settings.startDate,
+    endDate: state.settings.endDate
   }
 }
 

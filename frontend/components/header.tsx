@@ -3,9 +3,14 @@ import Select from 'react-select'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import DatePicker from 'react-datepicker'
-import { ReduxState } from '../redux'
+import { GraphType, ReduxState } from '../redux'
 import { Reading } from '../services/api'
-import { blackBg, cyan, selectBg, selectBorder, teal, white } from './styles'
+import { reactSelectStyles, white } from './styles'
+import { settingsEndChangeThunk, settingsStartChangeThunk } from '../redux/thunks'
+
+const dbStart = 1579621683063
+const oneDay = 60 * 60 * 24 * 1000
+const dateFormat = 'dd / MM / yy'
 
 const H1 = styled.h1`
   font-size: 1rem;
@@ -30,122 +35,111 @@ const Col = styled.li`
   }
 `
 
-const Nav = styled.ul``
+const DateLabel = styled.label`
+  display: inline-block;
+  @media (max-width: 799px) {
+    min-width: 5rem;
+  }
+  @media (min-width: 800px) {
+    margin-right: 1rem;
+  }
+  + div {
+    margin-right: 1rem;
+  }
+`
+const TypeLabel = styled(DateLabel)`
+  + div {
+    display: inline-block;
+  }
+`
 
-const selectStyles = {
-  container: (provided, state) => ({
-    ...provided,
-    width: '8rem'
-  }),
-  control: (provided, state) => ({
-    ...provided,
-    backgroundColor: blackBg,
-    borderColor: state.menuIsOpen ? cyan : selectBorder,
-    borderRadius: 0,
-    boxShadow: 'none',
-    minHeight: 0,
-    fontSize: '0.8rem',
-    height: 33,
-    width: 146,
-    cursor: 'pointer',
-    '&:hover': {
-      borderColor: cyan
-    },
-    '>div': {
-      padding: '0 0.5rem',
-      height: '100%'
-    }
-  }),
-  placeholder: (provided, state) => ({
-    ...provided,
-    color: white,
-    fontSize: '0.8rem'
-  }),
-  indicatorsContainer: () => ({
-    display: 'none'
-  }),
-  singleValue: (provided, state) => ({
-    ...provided,
-    color: white,
-    margin: 0
-  }),
-  menu: (provided, state) => ({
-    ...provided,
-    backgroundColor: selectBg,
-    border: `1px solid ${teal}`,
-    borderRadius: '0',
-    width: 146,
-    margin: '10px 0'
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    backgroundColor: state.isSelected ? cyan : null,
-    color: state.isSelected ? white : null,
-    '&:hover': {
-      backgroundColor: cyan,
-      color: white,
-      cursor: 'pointer'
-    }
-  }),
-  menuList: (provided, state) => ({
-    ...provided,
-    padding: 0
-  })
-}
+const Nav = styled.ul``
 
 type Props = {
   ready: boolean
   readings: Reading[]
-}
-
-const handleChange = () => {
-  console.log('jhfdsjkhjks')
+  startDate: number
+  endDate: number
+  graphType: GraphType
+  settingsStartChangeThunk: typeof settingsStartChangeThunk
+  settingsEndChangeThunk: typeof settingsEndChangeThunk
 }
 
 const handleDateChangeRaw = e => {
   e.preventDefault()
 }
 
-const graphs = [
+const graphOptions = [
   { value: 'linear', label: 'Linear graph' },
   { value: 'overlayDays', label: 'Overlay days' },
   { value: 'overlayWeeks', label: 'Overlay weeks' },
   { value: 'meanAverage', label: 'Mean average' }
 ]
 
-const Header: FunctionComponent<Props> = ({ ready, readings }) => {
+const getGraphType =(graphType: GraphType) => {
+  switch(graphType){
+    case GraphType.Linear:
+    case GraphType.MeanAverage:
+    case GraphType.OverlayDays:
+    case GraphType.OverlayWeeks:
+    default:
+      return { value: 'linear', label: 'Linear graph' }
+  }
+}
+
+const Header: FunctionComponent<Props> = ({
+  ready,
+  readings,
+  startDate,
+  endDate,
+  graphType,
+  settingsStartChangeThunk,
+  settingsEndChangeThunk
+}) => {
+  const graphValue = getGraphType(graphType)
+
   return (
     <Container>
       <H1>Levels</H1>
-      <H2> {ready ? `Latest CGM reading: ${new Date(readings[readings.length - 1].date).toUTCString()}` : 'Loading data, please wait'}</H2>
+      <H2>
+        {ready
+          ? `Latest CGM reading: ${new Date(readings[readings.length - 1].date).toUTCString()}`
+          : 'Loading data, please wait'}
+      </H2>
 
       <Nav>
-        {ready && (
-          <>
-            <Col>
-              <label className="header-label">Start date:</label>
-              <DatePicker
-                showPopperArrow={false}
-                selected={readings[readings.length - 1].date}
-                onChange={handleChange}
-                onChangeRaw={handleDateChangeRaw}
-              />
-            </Col>
-            <Col>
-              <label className="header-label">End date:</label>
-              <DatePicker
-                showPopperArrow={false}
-                selected={readings[0].date}
-                onChange={handleChange}
-                onChangeRaw={handleDateChangeRaw}
-              />
-            </Col>
-            <Col>
-              <label className="header-label graph-type-label">Graph type:</label>
-              <Select isSearchable={false} styles={selectStyles} options={graphs} />
-            </Col>
-          </>
-        )}
+        <Col>
+          <DateLabel>Start date:</DateLabel>
+          <DatePicker
+            showPopperArrow={false}
+            selected={new Date(startDate)}
+            onChange={date => {
+              settingsStartChangeThunk(date.getTime(), endDate)
+            }}
+            onChangeRaw={handleDateChangeRaw}
+            dateFormat={dateFormat}
+            maxDate={new Date(endDate - oneDay)}
+            minDate={new Date(dbStart)}
+          />
+        </Col>
+        <Col>
+          <DateLabel>End date:</DateLabel>
+          <DatePicker
+            showPopperArrow={false}
+            selected={new Date(endDate)}
+            onChange={date => {
+              settingsEndChangeThunk(startDate, date.getTime())
+            }}
+            onChangeRaw={handleDateChangeRaw}
+            dateFormat={dateFormat}
+            minDate={new Date(startDate + oneDay)}
+            maxDate={new Date()}
+          />
+        </Col>
+        <Col>
+          <TypeLabel>Graph type:</TypeLabel>
+          <Select instanceId="graphType" isSearchable={false} styles={reactSelectStyles} options={graphOptions} value={graphValue}/>
+        </Col>
       </Nav>
     </Container>
   )
@@ -154,10 +148,11 @@ const Header: FunctionComponent<Props> = ({ ready, readings }) => {
 function mapStateToProps(state: ReduxState) {
   return {
     ready: state.readings?.data?.length > 0 && !state.readings.pending,
-    readings: state.readings?.data
+    readings: state.readings?.data,
+    ...state.settings
   }
 }
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = { settingsStartChangeThunk, settingsEndChangeThunk }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)
