@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Reading } from '../services/api'
 import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from './styles'
 import { Options } from '../redux/thunks'
+import { differenceInDays } from 'date-fns'
 
 type Props = {
   data: Reading[]
@@ -33,9 +34,6 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin, options 
       .ease(d3.easeLinear)
 
     const chart = d3.select(svgRef.current)
-
-    const timeFormat = d3.timeFormat('%H:%m')
-
     chart.attr('width', width).attr('height', height)
 
     // 265 x axis line
@@ -78,23 +76,13 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin, options 
     const xScale = d3
       .scaleTime()
       .domain([xMin, xMax])
-      .nice(d3.timeWeek)
+      // .nice(d3.ti)
       .range([margin, width - margin])
 
     const yScale = d3
       .scaleLinear()
       .domain([0, 20])
       .range([height - margin, margin])
-
-    const yAxis = d3.axisLeft(yScale).ticks(5)
-    // .tickValues(yScale.domain())
-
-    const xAxis = d3
-      .axisBottom(xScale)
-      .ticks(10)
-      .tickSizeOuter(0)
-      .tickPadding(5)
-      .tickFormat(timeFormat)
 
     chart
       .selectAll('dot')
@@ -119,19 +107,46 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin, options 
         return normalDot
       })
 
+    const clockFormat = d3.timeFormat('%H:%M')
+    const dateFormat = d3.timeFormat('%e %B')
+
+    const sgvAxis = d3.axisLeft(yScale).ticks(5)
+
+    const clockAxis = d3
+      .axisBottom(xScale)
+      .tickSizeOuter(0)
+      .tickPadding(5)
+      .tickFormat(clockFormat)
+
+    const dateAxis = d3
+      .axisTop(xScale)
+      .ticks(+differenceInDays(options.endDate, options.startDate))
+      .tickSizeOuter(0)
+      .tickPadding(5)
+      .tickFormat(dateFormat)
+
     chart
       .append('g')
-      .call(yAxis)
+      .call(sgvAxis)
       .attr('transform', `translate(${margin}, 0)`)
       .attr('stroke', white)
       .attr('font-weight', 300)
 
     chart
       .append('g')
-      .call(xAxis)
+      .call(clockAxis)
       .attr('transform', 'translate(0, ' + (height - margin) + ')')
       .attr('stroke', white)
       .attr('font-weight', 300)
+
+    chart
+      .append('g')
+      .call(dateAxis)
+      .attr('transform', 'translate(0, ' + (height - margin) + ')')
+      .attr('stroke', white)
+      .attr('font-weight', 300)
+
+    // const xAxisLabels = d3.selectAll('g.x.axis g text').each(insertBreaks)
   }, [svgRef])
 
   return (
