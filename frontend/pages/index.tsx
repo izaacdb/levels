@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
-import { ReduxState } from '../redux'
+import { GraphType, GraphValues, ReduxState } from '../redux'
 import { getReadingsThunk, Options } from '../redux/thunks'
 import { Reading } from '../services/api'
 import Graph from '../components/graph'
@@ -12,9 +12,10 @@ type Props = {
   getReadingsThunk: typeof getReadingsThunk
   pending: boolean
   options: Options
+  graphType: GraphType
 }
 
-const HomePage: FunctionComponent<Props> = ({ readings, getReadingsThunk, pending, options }) => {
+const HomePage: FunctionComponent<Props> = ({ readings, getReadingsThunk, pending, options, graphType }) => {
   if (readings.length === 0 && !pending) {
     getReadingsThunk(options)
   }
@@ -22,11 +23,18 @@ const HomePage: FunctionComponent<Props> = ({ readings, getReadingsThunk, pendin
     return <Loading />
   }
 
-  return <Graph data={readings} margin={30} width={1024} height={360} options={options} />
+  switch (graphType.value) {
+    case GraphValues.aggregate:
+      return <DayGraph data={readings} margin={30} width={1024} height={360} options={options} />
+    case GraphValues.linear:
+    default:
+      return <Graph data={readings} margin={30} width={1024} height={360} options={options} />
+  }
 }
 
 function mapStateToProps(state: ReduxState) {
   return {
+    graphType: state.settings.graphType,
     options: {
       startDate: state.settings.startDate,
       endDate: state.settings.endDate,

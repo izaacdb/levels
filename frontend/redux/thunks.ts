@@ -3,13 +3,14 @@ import {
   readingsGetFailed,
   readingsGetPending,
   readingsGetSuccess,
-  settingsEndDateChange, settingsEndTimeChange,
+  settingsEndDateChange, settingsEndTimeChange, settingsGraphChange,
   settingsStartDateChange, settingsStartTimeChange
 } from './actions'
+import { GraphType } from './index'
 
 export interface Options{
-  startDate: Date
-  endDate: Date
+  startDate: number
+  endDate: number
   startTime?: number
   endTime?: number
 }
@@ -51,6 +52,13 @@ export function settingsStartTimeChangeThunk(options: Options) {
 export function settingsEndTimeChangeThunk(options: Options) {
   return dispatch => {
     dispatch(settingsEndTimeChange(options.endTime))
+    dispatch(getReadingsThunk(options))
+  }
+}
+
+export function settingsGraphChangeThunk(options: Options, graphType: GraphType) {
+  return dispatch => {
+    dispatch(settingsGraphChange(graphType))
     dispatch(getReadingsThunk(options))
   }
 }

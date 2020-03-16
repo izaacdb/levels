@@ -16,12 +16,20 @@ export enum ActionType {
   SETTINGS_GRAPH_CHANGE = '[Settings] Graph type changed'
 }
 
-export enum GraphType {
-  Linear,
-  OverlayDays,
-  OverlayWeeks,
-  MeanAverage
+export enum GraphValues {
+  linear = 'linear',
+  aggregate = 'aggregate'
 }
+
+export interface GraphType {
+  value: string
+  label: string
+}
+
+export const graphTypes: GraphType[] = [
+  { value: GraphValues.linear, label: 'Linear graph' },
+  { value: GraphValues.aggregate, label: 'Aggregate days' }
+]
 
 export interface ReduxState {
   readings: { data: Reading[]; pending: boolean; error: string }
@@ -46,7 +54,7 @@ const initialSettingsState: ReduxState['settings'] = {
   endDate: getTime(new Date()),
   startTime: 0,
   endTime: 23,
-  graphType: GraphType.Linear
+  graphType: graphTypes[0]
 }
 
 export const readingsReducer = (state: ReduxState['readings'] = initialReadingState, action: Action<Reading[]>) => {
@@ -75,7 +83,7 @@ export const readingsReducer = (state: ReduxState['readings'] = initialReadingSt
 
 export const settingsReducer = (
   state: ReduxState['settings'] = initialSettingsState,
-  action: Action<number | Date | GraphType>
+  action: Action<number | GraphType>
 ) => {
   switch (action.type) {
     case ActionType.SETTINGS_START_DATE_CHANGE: {

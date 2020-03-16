@@ -69,6 +69,7 @@ const Footer: FunctionComponent<Props> = ({ readings, ready }) => {
             <Label>Minimum reading:</Label>
             <Value>{min.toFixed(1)}</Value>
           </Item>
+          <br/>
           <Item>
             <Label>Low readings:</Label>
             <Value>{((low.length / readings.length) * 100).toFixed(1)}%</Value>

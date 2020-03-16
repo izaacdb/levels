@@ -4,6 +4,7 @@ import React from 'react'
 
 const Container = styled.div`
   width: 100%;
+  height: 360px;
   background-color: ${blackBg};
   border: 1px solid ${graphBorder};
   display: flex;

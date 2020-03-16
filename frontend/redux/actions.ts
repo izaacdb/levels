@@ -11,19 +11,19 @@ export const readingsGetFailed = (error: string) => {
   return { type: ActionType.READINGS_GET_FAILED, error }
 }
 
-export const settingsStartDateChange = (data: Date) => {
+export const settingsStartDateChange = (data: number) => {
   return { type: ActionType.SETTINGS_START_DATE_CHANGE, data }
 }
 
-export const settingsEndDateChange = (data: Date) => {
+export const settingsEndDateChange = (data: number) => {
   return { type: ActionType.SETTINGS_END_DATE_CHANGE, data }
 }
 
-export const settingsStartTimeChange = (data: Number) => {
+export const settingsStartTimeChange = (data: number) => {
   return { type: ActionType.SETTINGS_START_TIME_CHANGE, data }
 }
 
-export const settingsEndTimeChange = (data: Number) => {
+export const settingsEndTimeChange = (data: number) => {
   return { type: ActionType.SETTINGS_END_TIME_CHANGE, data }
 }
 export const settingsGraphChange = (data: GraphType) => {

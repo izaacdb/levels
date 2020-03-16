@@ -3,11 +3,17 @@ import Select from 'react-select'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import DatePicker from 'react-datepicker'
-import { addDays, subDays } from 'date-fns'
-import { GraphType, ReduxState } from '../redux'
+import { addDays, getTime, subDays } from 'date-fns'
+import { GraphType, graphTypes, ReduxState } from '../redux'
 import { Reading } from '../services/api'
 import { reactSelectStyles, white } from './styles'
-import { settingsEndDateChangeThunk, settingsStartDateChangeThunk } from '../redux/thunks'
+import {
+  settingsEndDateChangeThunk,
+  settingsEndTimeChangeThunk,
+  settingsGraphChangeThunk,
+  settingsStartDateChangeThunk,
+  settingsStartTimeChangeThunk
+} from '../redux/thunks'
 
 const dbStartDate = new Date(1579621683063)
 const dateFormat = 'dd / MM / yy'
@@ -63,29 +69,13 @@ type Props = {
   graphType: GraphType
   settingsStartChangeThunk: typeof settingsStartDateChangeThunk
   settingsEndChangeThunk: typeof settingsEndDateChangeThunk
+  settingsStartTimeChangeThunk: typeof settingsStartTimeChangeThunk
+  settingsEndTimeChangeThunk: typeof settingsEndTimeChangeThunk
+  settingsGraphChangeThunk: typeof settingsGraphChangeThunk
 }
 
 const handleDateChangeRaw = e => {
   e.preventDefault()
-}
-
-const graphOptions = [
-  { value: 'linear', label: 'Linear graph' },
-  { value: 'overlayDays', label: 'Overlay days' },
-  { value: 'overlayWeeks', label: 'Overlay weeks' },
-  { value: 'meanAverage', label: 'Mean average' },
-  { value: 'timeRange', label: 'Specific time range' }
-]
-
-const getGraphType = (graphType: GraphType) => {
-  switch (graphType) {
-    case GraphType.Linear:
-    case GraphType.MeanAverage:
-    case GraphType.OverlayDays:
-    case GraphType.OverlayWeeks:
-    default:
-      return { value: 'linear', label: 'Linear graph' }
-  }
 }
 
 const Header: FunctionComponent<Props> = ({
@@ -95,10 +85,12 @@ const Header: FunctionComponent<Props> = ({
   endDate,
   graphType,
   settingsStartChangeThunk,
-  settingsEndChangeThunk
+  settingsEndChangeThunk,
+  settingsStartTimeChangeThunk,
+  settingsEndTimeChangeThunk,
+  settingsGraphChangeThunk
 }) => {
-  const graphValue = getGraphType(graphType)
-console.log(startDate)
+  console.log(startDate)
   return (
     <Container>
       <H1>Levels</H1>
@@ -115,7 +107,7 @@ console.log(startDate)
             showPopperArrow={false}
             selected={startDate}
             onChange={(date: Date) => {
-              settingsStartChangeThunk({ startDate: date, endDate })
+              settingsStartChangeThunk({ startDate: getTime(date), endDate: getTime(endDate) })
             }}
             onChangeRaw={handleDateChangeRaw}
             dateFormat={dateFormat}
@@ -129,7 +121,7 @@ console.log(startDate)
             showPopperArrow={false}
             selected={endDate}
             onChange={date => {
-              settingsEndChangeThunk({ startDate, endDate: date })
+              settingsEndChangeThunk({ startDate: getTime(startDate), endDate: getTime(date) })
             }}
             onChangeRaw={handleDateChangeRaw}
             dateFormat={dateFormat}
@@ -143,8 +135,11 @@ console.log(startDate)
             instanceId="graphType"
             isSearchable={false}
             styles={reactSelectStyles}
-            options={graphOptions}
-            value={graphValue}
+            options={graphTypes}
+            value={graphType}
+            onChange={selection => {
+              settingsGraphChangeThunk({ startDate: getTime(startDate), endDate: getTime(endDate) }, selection)
+            }}
           />
         </Col>
       </Nav>
@@ -153,6 +148,7 @@ console.log(startDate)
 }
 
 function mapStateToProps(state: ReduxState) {
+  console.log('header')
   console.log(state.settings)
   return {
     ready: state.readings?.data?.length > 0 && !state.readings.pending,
@@ -163,7 +159,10 @@ function mapStateToProps(state: ReduxState) {
 
 const mapDispatchToProps = {
   settingsStartChangeThunk: settingsStartDateChangeThunk,
-  settingsEndChangeThunk: settingsEndDateChangeThunk
+  settingsEndChangeThunk: settingsEndDateChangeThunk,
+  settingsStartTimeChangeThunk: settingsStartTimeChangeThunk,
+  settingsEndTimeChangeThunk: settingsEndTimeChangeThunk,
+  settingsGraphChangeThunk: settingsGraphChangeThunk
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)
