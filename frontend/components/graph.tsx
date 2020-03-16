@@ -1,18 +1,16 @@
 import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
 import styled from 'styled-components'
-import { connect } from 'react-redux'
 import { Reading } from '../services/api'
 import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from './styles'
-import { ReduxState } from '../redux'
+import { Options } from '../redux/thunks'
 
 type Props = {
   data: Reading[]
   height: number
   width: number
   margin: number
-  startDate: number
-  endDate: number
+  options: Options
 }
 
 const Container = styled.div`
@@ -22,14 +20,7 @@ const Container = styled.div`
   border: 1px solid ${graphBorder};
 `
 
-// const roundMinutes = (date: number) => {
-//   const actualDate = new Date(date)
-//   actualDate.setHours(actualDate.getHours() + Math.round(actualDate.getMinutes() / 60))
-//   actualDate.setMinutes(0)
-//   return actualDate.getTime()
-// }
-
-const Graph: FunctionComponent<Props> = ({ data, height, width, margin, startDate, endDate }) => {
+const Graph: FunctionComponent<Props> = ({ data, height, width, margin, options }) => {
   const svgRef = createRef<SVGSVGElement>()
 
   useEffect(() => {
@@ -81,12 +72,13 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin, startDat
 
     // actual graph data vvv
 
-    const xMin = d3.min(data, () => startDate)
-    const xMax = d3.max(data, () => endDate)
+    const xMin = d3.min(data, () => options.startDate)
+    const xMax = d3.max(data, () => options.endDate)
 
     const xScale = d3
       .scaleTime()
       .domain([xMin, xMax])
+      .nice(d3.timeWeek)
       .range([margin, width - margin])
 
     const yScale = d3
@@ -149,14 +141,4 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin, startDat
   )
 }
 
-function mapStateToProps(state: ReduxState) {
-  return {
-    startDate: state.settings.startDate,
-    endDate: state.settings.endDate
-  }
-}
-
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Graph)
-
+export default Graph

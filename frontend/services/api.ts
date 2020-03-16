@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Options } from '../redux/thunks'
 
 export type Reading = {
   sgv: number
@@ -9,20 +10,21 @@ export type Reading = {
 
 const env = process.env.NODE_ENV || 'development'
 
-const getMongoURL = (startDate: number, endDate: number) => {
+const getMongoURL = (options: Options) => {
+  const params = new URLSearchParams(JSON.parse(JSON.stringify(options))) // removes undefined
   switch (env) {
     case 'production':
-      return `https://levels-lambdas.netlify.com/.netlify/functions/mongo?startDate=${startDate}&endDate=${endDate}`
+      return `https://levels-lambdas.netlify.com/.netlify/functions/mongo?${params}`
     case 'development':
     case 'test':
     default:
-      return `http://192.168.1.71:9000/mongo?startDate=${startDate}&endDate=${endDate}`
+      return `http://192.168.1.71:9000/mongo?${params}`
   }
 }
 
-export const readingsGet = (startDate: number, endDate: number): Promise<Reading[]> => {
+export const readingsGet = (options: Options): Promise<Reading[]> => {
   return axios
-    .get(getMongoURL(startDate, endDate))
+    .get(getMongoURL(options))
     .then(response => {
       return response.data.map(r => ({ ...r, sgv: r.sgv * 0.0555 }))
     })

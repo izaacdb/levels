@@ -3,13 +3,13 @@ import Select from 'react-select'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import DatePicker from 'react-datepicker'
+import { addDays, subDays } from 'date-fns'
 import { GraphType, ReduxState } from '../redux'
 import { Reading } from '../services/api'
 import { reactSelectStyles, white } from './styles'
-import { settingsEndChangeThunk, settingsStartChangeThunk } from '../redux/thunks'
+import { settingsEndDateChangeThunk, settingsStartDateChangeThunk } from '../redux/thunks'
 
-const dbStart = 1579621683063
-const oneDay = 60 * 60 * 24 * 1000
+const dbStartDate = new Date(1579621683063)
 const dateFormat = 'dd / MM / yy'
 
 const H1 = styled.h1`
@@ -58,11 +58,11 @@ const Nav = styled.ul``
 type Props = {
   ready: boolean
   readings: Reading[]
-  startDate: number
-  endDate: number
+  startDate: Date
+  endDate: Date
   graphType: GraphType
-  settingsStartChangeThunk: typeof settingsStartChangeThunk
-  settingsEndChangeThunk: typeof settingsEndChangeThunk
+  settingsStartChangeThunk: typeof settingsStartDateChangeThunk
+  settingsEndChangeThunk: typeof settingsEndDateChangeThunk
 }
 
 const handleDateChangeRaw = e => {
@@ -74,11 +74,11 @@ const graphOptions = [
   { value: 'overlayDays', label: 'Overlay days' },
   { value: 'overlayWeeks', label: 'Overlay weeks' },
   { value: 'meanAverage', label: 'Mean average' },
-  {value: 'timeRange', label: 'Specific time range'}
+  { value: 'timeRange', label: 'Specific time range' }
 ]
 
-const getGraphType =(graphType: GraphType) => {
-  switch(graphType){
+const getGraphType = (graphType: GraphType) => {
+  switch (graphType) {
     case GraphType.Linear:
     case GraphType.MeanAverage:
     case GraphType.OverlayDays:
@@ -98,7 +98,7 @@ const Header: FunctionComponent<Props> = ({
   settingsEndChangeThunk
 }) => {
   const graphValue = getGraphType(graphType)
-
+console.log(startDate)
   return (
     <Container>
       <H1>Levels</H1>
@@ -113,33 +113,39 @@ const Header: FunctionComponent<Props> = ({
           <DateLabel>Start date:</DateLabel>
           <DatePicker
             showPopperArrow={false}
-            selected={new Date(startDate)}
-            onChange={date => {
-              settingsStartChangeThunk(date.getTime(), endDate)
+            selected={startDate}
+            onChange={(date: Date) => {
+              settingsStartChangeThunk({ startDate: date, endDate })
             }}
             onChangeRaw={handleDateChangeRaw}
             dateFormat={dateFormat}
-            maxDate={new Date(endDate - oneDay)}
-            minDate={new Date(dbStart)}
+            maxDate={subDays(new Date(), 1)}
+            minDate={dbStartDate}
           />
         </Col>
         <Col>
           <DateLabel>End date:</DateLabel>
           <DatePicker
             showPopperArrow={false}
-            selected={new Date(endDate)}
+            selected={endDate}
             onChange={date => {
-              settingsEndChangeThunk(startDate, date.getTime())
+              settingsEndChangeThunk({ startDate, endDate: date })
             }}
             onChangeRaw={handleDateChangeRaw}
             dateFormat={dateFormat}
-            minDate={new Date(startDate + oneDay)}
+            minDate={addDays(startDate, 1)}
             maxDate={new Date()}
           />
         </Col>
         <Col>
           <TypeLabel>Graph type:</TypeLabel>
-          <Select instanceId="graphType" isSearchable={false} styles={reactSelectStyles} options={graphOptions} value={graphValue}/>
+          <Select
+            instanceId="graphType"
+            isSearchable={false}
+            styles={reactSelectStyles}
+            options={graphOptions}
+            value={graphValue}
+          />
         </Col>
       </Nav>
     </Container>
@@ -147,6 +153,7 @@ const Header: FunctionComponent<Props> = ({
 }
 
 function mapStateToProps(state: ReduxState) {
+  console.log(state.settings)
   return {
     ready: state.readings?.data?.length > 0 && !state.readings.pending,
     readings: state.readings?.data,
@@ -154,6 +161,9 @@ function mapStateToProps(state: ReduxState) {
   }
 }
 
-const mapDispatchToProps = { settingsStartChangeThunk, settingsEndChangeThunk }
+const mapDispatchToProps = {
+  settingsStartChangeThunk: settingsStartDateChangeThunk,
+  settingsEndChangeThunk: settingsEndDateChangeThunk
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

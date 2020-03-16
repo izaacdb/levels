@@ -2,10 +2,10 @@ import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import moment from 'moment'
 import { Reading } from '../services/api'
 import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from './styles'
 import { ReduxState } from '../redux'
+import { set } from 'date-fns'
 
 type Props = {
   data: Reading[]
@@ -23,24 +23,37 @@ const Container = styled.div`
   border: 1px solid ${graphBorder};
 `
 
-// const roundMinutes = (date: number) => {
-//   const actualDate = new Date(date)
-//   actualDate.setHours(actualDate.getHours() + Math.round(actualDate.getMinutes() / 60))
-//   actualDate.setMinutes(0)
-//   return actualDate.getTime()
-// }
+const midnight = set(new Date(), {
+  year: 2000,
+  month: 0,
+  date: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  milliseconds: 0
+})
+const nextMidnight = set(new Date(), {
+  year: 2000,
+  month: 0,
+  date: 0,
+  hours: 23,
+  minutes: 59,
+  seconds: 59,
+  milliseconds: 999
+})
 
 const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, startDate, endDate }) => {
   const svgRef = createRef<SVGSVGElement>()
 
   useEffect(() => {
-    //1584311645865
-    const midnight = moment().set({year: 2000, month: 0, date:0, hour:0, minute: 0, second:0, millisecond:0}).toDate()
-    const nextMidnight = moment().set({year: 2000, month: 0, date:0, hour:23, minute: 59, second:59, millisecond:999}).toDate()
-    const newData = data.map(d => {
-      return {...d, date: moment(d.date).set({ year: 2000, month: 0, date: 0 }).toDate()}
-    })
-    console.log(newData)
+    // 1584311645865
+
+    const sameDayData = data.map(d => ({
+      ...d,
+      date: set(d.date, { year: 2000, month: 0, date: 0 })
+    }))
+
+    console.log(sameDayData)
     svgRef.current.innerHTML = ''
 
     const transition = d3
@@ -109,7 +122,7 @@ const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, start
 
     chart
       .selectAll('dot')
-      .data(newData)
+      .data(sameDayData)
       .enter()
       .append('svg:circle')
       .attr('stroke-opacity', 0)

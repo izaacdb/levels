@@ -3,14 +3,21 @@ import {
   readingsGetFailed,
   readingsGetPending,
   readingsGetSuccess,
-  settingsEndChange,
-  settingsStartChange
+  settingsEndDateChange, settingsEndTimeChange,
+  settingsStartDateChange, settingsStartTimeChange
 } from './actions'
 
-export function getReadingsThunk(startDate: number, endDate: number) {
+export interface Options{
+  startDate: Date
+  endDate: Date
+  startTime?: number
+  endTime?: number
+}
+
+export function getReadingsThunk(options: Options) {
   return dispatch => {
     dispatch(readingsGetPending())
-    readingsGet(startDate, endDate).then(readings => {
+    readingsGet(options).then(readings => {
       if (readings.length > 0) {
         dispatch(readingsGetSuccess(readings))
       } else {
@@ -20,16 +27,30 @@ export function getReadingsThunk(startDate: number, endDate: number) {
   }
 }
 
-export function settingsEndChangeThunk(startDate: number, endDate: number) {
+export function settingsStartDateChangeThunk(options: Options) {
   return dispatch => {
-    dispatch(settingsEndChange(endDate))
-    dispatch(getReadingsThunk(startDate, endDate))
+    dispatch(settingsStartDateChange(options.startDate))
+    dispatch(getReadingsThunk(options))
   }
 }
 
-export function settingsStartChangeThunk(startDate: number, endDate: number) {
+export function settingsEndDateChangeThunk(options: Options) {
   return dispatch => {
-    dispatch(settingsStartChange(startDate))
-    dispatch(getReadingsThunk(startDate, endDate))
+    dispatch(settingsEndDateChange(options.endDate))
+    dispatch(getReadingsThunk(options))
+  }
+}
+
+export function settingsStartTimeChangeThunk(options: Options) {
+  return dispatch => {
+    dispatch(settingsStartTimeChange(options.startTime))
+    dispatch(getReadingsThunk(options))
+  }
+}
+
+export function settingsEndTimeChangeThunk(options: Options) {
+  return dispatch => {
+    dispatch(settingsEndTimeChange(options.endTime))
+    dispatch(getReadingsThunk(options))
   }
 }

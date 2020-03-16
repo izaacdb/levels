@@ -54,7 +54,7 @@ export const ReadingSchema = new mongoose.Schema({
 })
 const Reading = mongoose.model<IReading>('readings', ReadingSchema)
 
-export const getReadings = async (startDate: number, endDate: number) => {
+export const getReadings = async (startDate: number, endDate: number, startTime: number, endTime: number) => {
   return Reading.find({
     $expr: {
       $and: [
@@ -63,43 +63,45 @@ export const getReadings = async (startDate: number, endDate: number) => {
         },
         {
           $lte: ['$date', endDate]
+        },
+        {
+          $gte: [
+            {
+              $hour: {
+                $dateFromString: { dateString: '$dateString' }
+              }
+            },
+            startTime
+          ]
+        },
+        {
+          $lte: [
+            {
+              $hour: {
+                $dateFromString: { dateString: '$dateString' }
+              }
+            },
+            endTime
+          ]
         }
-        // {
-        //   $gte: [
-        //     {
-        //       $hour: {
-        //         $dateFromString: { dateString: '$dateString' }
-        //       }
-        //     },
-        //     20
-        //   ]
-        // },
-        // {
-        //   $lte: [
-        //     {
-        //       $hour: {
-        //         $dateFromString: { dateString: '$dateString' }
-        //       }
-        //     },
-        //     24
-        //   ]
-        // }
       ]
     }
   }).select('sgv date rssi noise')
 }
 
+/**
+ * This accepts timestamps for startDate, endDate and 0-23 for startTime, endTime
+ */
 export const handler: Handler = (event: APIGatewayEvent, context: Context, callback: Callback) => {
   console.log('Inside mongo handler')
-  return getReadings(+event.queryStringParameters['startDate'], +event.queryStringParameters['endDate']).then(
-    readings => {
-      if (readings?.length > 0) {
-        console.log(`Retrieved ${readings.length} readings from database`, 200)
-        return wrap(readings)
-      } else {
-        console.log("Didn't retrieve any readings from DB query")
-        return wrap({ error: "Didn't retrieve any readings from DB query" }, 400)
-      }
+  const { startDate, endDate, startTime = 0, endTime = 23 } = event.queryStringParameters
+  return getReadings(+startDate, +endDate, +startTime, +endTime).then(readings => {
+    if (readings?.length > 0) {
+      console.log(`Retrieved ${readings.length} readings from database`, 200)
+      return wrap(readings)
+    } else {
+      console.log("Didn't retrieve any readings from DB query")
+      return wrap({ error: "Didn't retrieve any readings from DB query" }, 400)
     }
-  )
+  })
 }

@@ -1,5 +1,6 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import { getTime, subDays } from 'date-fns'
 
 import thunk from 'redux-thunk'
 import { Reading } from '../services/api'
@@ -8,8 +9,10 @@ export enum ActionType {
   READINGS_GET_SUCCESS = '[Readings] DB retrieval succeeded',
   READINGS_GET_PENDING = '[Readings] DB retrieval pending',
   READINGS_GET_FAILED = '[Readings] DB retrieval failed',
-  SETTINGS_START_CHANGE = '[Settings] Start date changed',
-  SETTINGS_END_CHANGE = '[Settings] End date changed',
+  SETTINGS_START_DATE_CHANGE = '[Settings] Start date changed',
+  SETTINGS_END_DATE_CHANGE = '[Settings] End date changed',
+  SETTINGS_START_TIME_CHANGE = '[Settings] Start time changed',
+  SETTINGS_END_TIME_CHANGE = '[Settings] End time changed',
   SETTINGS_GRAPH_CHANGE = '[Settings] Graph type changed'
 }
 
@@ -23,7 +26,7 @@ export enum GraphType {
 export interface ReduxState {
   readings: { data: Reading[]; pending: boolean; error: string }
   getState: () => void
-  settings: { startDate: number; endDate: number; graphType: GraphType }
+  settings: { startDate: number; endDate: number; startTime: number; endTime: number; graphType: GraphType }
 }
 
 interface Action<T> {
@@ -39,8 +42,10 @@ const initialReadingState: ReduxState['readings'] = {
 }
 
 const initialSettingsState: ReduxState['settings'] = {
-  startDate: Date.now() - 3 * 60 * 60 * 24 * 1000,
-  endDate: Date.now(),
+  startDate: getTime(subDays(new Date(), 3)),
+  endDate: getTime(new Date()),
+  startTime: 0,
+  endTime: 23,
   graphType: GraphType.Linear
 }
 
@@ -68,16 +73,25 @@ export const readingsReducer = (state: ReduxState['readings'] = initialReadingSt
   }
 }
 
-export const settingsReducer = (state: ReduxState['settings'] = initialSettingsState, action: Action<number | GraphType>) => {
+export const settingsReducer = (
+  state: ReduxState['settings'] = initialSettingsState,
+  action: Action<number | Date | GraphType>
+) => {
   switch (action.type) {
-    case ActionType.SETTINGS_START_CHANGE:{
-      return {...state, startDate: action.data}
+    case ActionType.SETTINGS_START_DATE_CHANGE: {
+      return { ...state, startDate: action.data }
     }
-    case ActionType.SETTINGS_END_CHANGE:{
-      return {...state, endDate: action.data}
+    case ActionType.SETTINGS_END_DATE_CHANGE: {
+      return { ...state, endDate: action.data }
     }
-    case ActionType.SETTINGS_GRAPH_CHANGE:{
-      return {...state, graphType: action.data}
+    case ActionType.SETTINGS_START_TIME_CHANGE: {
+      return { ...state, startTime: action.data }
+    }
+    case ActionType.SETTINGS_END_TIME_CHANGE: {
+      return { ...state, endTime: action.data }
+    }
+    case ActionType.SETTINGS_GRAPH_CHANGE: {
+      return { ...state, graphType: action.data }
     }
     default: {
       return state
