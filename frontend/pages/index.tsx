@@ -4,6 +4,7 @@ import { ReduxState } from '../redux'
 import { getReadingsThunk } from '../redux/thunks'
 import { Reading } from '../services/api'
 import Graph from '../components/graph'
+import DayGraph from '../components/day-graph'
 import Loading from '../components/loading'
 
 type Props = {
@@ -22,7 +23,7 @@ const HomePage: FunctionComponent<Props> = ({ readings, getReadingsThunk, pendin
     return <Loading />
   }
 
-  return <Graph data={readings} margin={30} width={1024} height={360} />
+  return <DayGraph data={readings} margin={30} width={1024} height={360} />
 }
 
 function mapStateToProps(state: ReduxState) {

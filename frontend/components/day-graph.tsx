@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import moment from 'moment'
 import { Reading } from '../services/api'
 import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from './styles'
 import { ReduxState } from '../redux'
@@ -29,11 +30,17 @@ const Container = styled.div`
 //   return actualDate.getTime()
 // }
 
-const Graph: FunctionComponent<Props> = ({ data, height, width, margin, startDate, endDate }) => {
+const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, startDate, endDate }) => {
   const svgRef = createRef<SVGSVGElement>()
 
   useEffect(() => {
-    console.log(`Graph effect: ${data.length} data points`)
+    //1584311645865
+    const midnight = moment().set({year: 2000, month: 0, date:0, hour:0, minute: 0, second:0, millisecond:0}).toDate()
+    const nextMidnight = moment().set({year: 2000, month: 0, date:0, hour:23, minute: 59, second:59, millisecond:999}).toDate()
+    const newData = data.map(d => {
+      return {...d, date: moment(d.date).set({ year: 2000, month: 0, date: 0 }).toDate()}
+    })
+    console.log(newData)
     svgRef.current.innerHTML = ''
 
     const transition = d3
@@ -43,7 +50,7 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin, startDat
 
     const chart = d3.select(svgRef.current)
 
-    const timeFormat = d3.timeFormat('%H:%m')
+    const timeFormat = d3.timeFormat('%H:%M')
 
     chart.attr('width', width).attr('height', height)
 
@@ -79,14 +86,10 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin, startDat
       .attr('stroke', high)
       .attr('stroke-width', 0.5)
 
-    // actual graph data vvv
-
-    const xMin = d3.min(data, () => startDate)
-    const xMax = d3.max(data, () => endDate)
-
     const xScale = d3
       .scaleTime()
-      .domain([xMin, xMax])
+      .domain([midnight, nextMidnight])
+      .nice(d3.timeDay)
       .range([margin, width - margin])
 
     const yScale = d3
@@ -106,7 +109,7 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin, startDat
 
     chart
       .selectAll('dot')
-      .data(data)
+      .data(newData)
       .enter()
       .append('svg:circle')
       .attr('stroke-opacity', 0)
@@ -158,5 +161,4 @@ function mapStateToProps(state: ReduxState) {
 
 const mapDispatchToProps = {}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Graph)
-
+export default connect(mapStateToProps, mapDispatchToProps)(DayGraph)
