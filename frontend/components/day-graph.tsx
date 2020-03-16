@@ -14,6 +14,8 @@ type Props = {
   margin: number
   startDate: number
   endDate: number
+  startTime: number
+  endTime: number
 }
 
 const Container = styled.div`
@@ -23,38 +25,40 @@ const Container = styled.div`
   border: 1px solid ${graphBorder};
 `
 
-const midnight = set(new Date(), {
-  year: 2000,
-  month: 0,
-  date: 0,
-  hours: 0,
-  minutes: 0,
-  seconds: 0,
-  milliseconds: 0
-})
-const nextMidnight = set(new Date(), {
-  year: 2000,
-  month: 0,
-  date: 0,
-  hours: 23,
-  minutes: 59,
-  seconds: 59,
-  milliseconds: 999
-})
 
-const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, startDate, endDate }) => {
+
+const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, startTime, endTime }) => {
   const svgRef = createRef<SVGSVGElement>()
 
   useEffect(() => {
-    // 1584311645865
 
     const sameDayData = data.map(d => ({
       ...d,
       date: set(d.date, { year: 2000, month: 0, date: 0 })
     }))
 
-    console.log(sameDayData)
     svgRef.current.innerHTML = ''
+
+    const xStart = set(new Date(), {
+      year: 2000,
+      month: 0,
+      date: 0,
+      hours: startTime,
+      minutes: 59,
+      seconds: 59,
+      milliseconds: 999
+    })
+    const xEnd = set(new Date(), {
+      year: 2000,
+      month: 0,
+      date: 0,
+      hours: endTime,
+      minutes: 0,
+      seconds: 0,
+      milliseconds: 0
+    })
+
+    console.log(startTime, endTime)
 
     const transition = d3
       .transition()
@@ -101,7 +105,7 @@ const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, start
 
     const xScale = d3
       .scaleTime()
-      .domain([midnight, nextMidnight])
+      .domain([xStart, xEnd])
       .nice(d3.timeDay)
       .range([margin, width - margin])
 
@@ -133,7 +137,6 @@ const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, start
       .delay((d, i) => i * (1200 / data.length))
       .attr('cx', d => xScale(d.date))
       .attr('cy', d => yScale(d.sgv))
-
       .style('fill', d => {
         if (d.sgv > 9) {
           return high
@@ -168,7 +171,9 @@ const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, start
 function mapStateToProps(state: ReduxState) {
   return {
     startDate: state.settings.startDate,
-    endDate: state.settings.endDate
+    endDate: state.settings.endDate,
+    startTime: state.settings.startTime,
+    endTime: state.settings.endTime
   }
 }
 

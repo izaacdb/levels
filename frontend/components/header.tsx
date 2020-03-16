@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import DatePicker from 'react-datepicker'
 import { addDays, getTime, subDays } from 'date-fns'
-import { GraphType, graphTypes, ReduxState } from '../redux'
+import { GraphType, graphOptions, GraphValues, ReduxState, timeOptions } from '../redux'
 import { Reading } from '../services/api'
 import { reactSelectStyles, white } from './styles'
 import {
@@ -64,8 +64,10 @@ const Nav = styled.ul``
 type Props = {
   ready: boolean
   readings: Reading[]
-  startDate: Date
-  endDate: Date
+  startDate: number
+  endDate: number
+  startTime: number
+  endTime: number
   graphType: GraphType
   settingsStartChangeThunk: typeof settingsStartDateChangeThunk
   settingsEndChangeThunk: typeof settingsEndDateChangeThunk
@@ -83,6 +85,8 @@ const Header: FunctionComponent<Props> = ({
   readings,
   startDate,
   endDate,
+  startTime,
+  endTime,
   graphType,
   settingsStartChangeThunk,
   settingsEndChangeThunk,
@@ -107,7 +111,7 @@ const Header: FunctionComponent<Props> = ({
             showPopperArrow={false}
             selected={startDate}
             onChange={(date: Date) => {
-              settingsStartChangeThunk({ startDate: getTime(date), endDate: getTime(endDate) })
+              settingsStartChangeThunk({ startDate: getTime(date), endDate: getTime(endDate), startTime, endTime })
             }}
             onChangeRaw={handleDateChangeRaw}
             dateFormat={dateFormat}
@@ -121,7 +125,7 @@ const Header: FunctionComponent<Props> = ({
             showPopperArrow={false}
             selected={endDate}
             onChange={date => {
-              settingsEndChangeThunk({ startDate: getTime(startDate), endDate: getTime(date) })
+              settingsEndChangeThunk({ startDate: getTime(startDate), endDate: getTime(date), startTime, endTime })
             }}
             onChangeRaw={handleDateChangeRaw}
             dateFormat={dateFormat}
@@ -135,14 +139,57 @@ const Header: FunctionComponent<Props> = ({
             instanceId="graphType"
             isSearchable={false}
             styles={reactSelectStyles}
-            options={graphTypes}
+            options={graphOptions}
             value={graphType}
             onChange={selection => {
-              settingsGraphChangeThunk({ startDate: getTime(startDate), endDate: getTime(endDate) }, selection)
+              settingsGraphChangeThunk(
+                { startDate: getTime(startDate), endDate: getTime(endDate), startTime, endTime },
+                selection
+              )
             }}
           />
         </Col>
       </Nav>
+      {graphType.value === GraphValues.aggregate && (
+        <Nav>
+          <Col>
+            <TypeLabel>Start time:</TypeLabel>
+            <Select
+              instanceId="startTime"
+              isSearchable={false}
+              styles={reactSelectStyles}
+              options={timeOptions}
+              value={timeOptions[startTime]}
+              onChange={selection => {
+                settingsStartTimeChangeThunk({
+                  startDate: getTime(startDate),
+                  endDate: getTime(endDate),
+                  startTime: selection.value,
+                  endTime
+                })
+              }}
+            />
+          </Col>
+          <Col>
+            <TypeLabel>End time:</TypeLabel>
+            <Select
+              instanceId="endTime"
+              isSearchable={false}
+              styles={reactSelectStyles}
+              options={timeOptions}
+              value={timeOptions[endTime]}
+              onChange={selection => {
+                settingsEndTimeChangeThunk({
+                  startDate: getTime(startDate),
+                  endDate: getTime(endDate),
+                  startTime,
+                  endTime: selection.value
+                })
+              }}
+            />
+          </Col>
+        </Nav>
+      )}
     </Container>
   )
 }

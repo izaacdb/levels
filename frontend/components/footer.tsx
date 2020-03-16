@@ -41,14 +41,22 @@ const Footer: FunctionComponent<Props> = ({ readings, ready }) => {
   const sgvs = readings.map(r => r.sgv)
   const total = readings.reduce((acc, r) => (acc += r.sgv), 0)
   const mean = total / readings.length
+
+  const totalDeviation = readings.reduce((acc, r) => (acc += Math.pow(r.sgv - mean, 2)), 0)
+  const variance = totalDeviation / readings.length
+  const stdDev = Math.sqrt(variance)
+
+  const hba1c = mean * 0.63 + 1.63
+
   const max = Math.max(...sgvs)
   const min = Math.min(...sgvs)
+
   const low = []
   const high = []
   readings.forEach(r => {
     if (r.sgv <= 4.5) {
       low.push(r.sgv)
-    } else if (r.sgv >= 9){
+    } else if (r.sgv >= 9) {
       high.push(r.sgv)
     }
   })
@@ -58,25 +66,38 @@ const Footer: FunctionComponent<Props> = ({ readings, ready }) => {
       {ready && (
         <>
           <Item>
-            <Label>Mean average:</Label>
+            <Label>Mean:</Label>
             <Value>{mean.toFixed(1)}</Value>
           </Item>
           <Item>
-            <Label>Maximum reading:</Label>
+            <Label>Maximum:</Label>
             <Value>{max.toFixed(1)}</Value>
           </Item>
           <Item>
-            <Label>Minimum reading:</Label>
+            <Label>Minimum:</Label>
             <Value>{min.toFixed(1)}</Value>
           </Item>
-          <br/>
+          <br />
           <Item>
             <Label>Low readings:</Label>
             <Value>{((low.length / readings.length) * 100).toFixed(1)}%</Value>
           </Item>
           <Item>
+            <Label>Normal readings:</Label>
+            <Value>{(((readings.length - (high.length + low.length)) / readings.length) * 100).toFixed(1)}%</Value>
+          </Item>
+          <Item>
             <Label>High readings:</Label>
             <Value>{((high.length / readings.length) * 100).toFixed(1)}%</Value>
+          </Item>
+          <br />
+          <Item>
+            <Label>HbA1c (estimated):</Label>
+            <Value>{hba1c.toFixed(1)}%</Value>
+          </Item>
+          <Item>
+            <Label>Standard deviation:</Label>
+            <Value>{stdDev.toFixed(1)}</Value>
           </Item>
         </>
       )}
