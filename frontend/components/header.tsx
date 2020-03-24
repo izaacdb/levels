@@ -16,7 +16,7 @@ import {
 } from '../redux/thunks'
 
 const dbStartDate = new Date(1579621683063)
-const dateFormat = 'dd / MM / yy'
+export const dateFormat = 'dd / MM / yy'
 
 const H1 = styled.h1`
   font-size: 1rem;
@@ -30,10 +30,10 @@ const H2 = styled.h2`
   margin: 0 0 1rem;
   padding: 0;
 `
-const Container = styled.div`
+const Form = styled.form`
   margin: 1rem 0 0;
 `
-const Col = styled.li`
+const Row = styled.li`
   color: ${white};
   margin: 0 1rem 1rem 0;
   @media (min-width: 800px) {
@@ -61,11 +61,11 @@ const TypeLabel = styled(DateLabel)`
 
 const Nav = styled.ul``
 
-type Props = {
+export type Props = {
   ready: boolean
   readings: Reading[]
-  startDate: number
-  endDate: number
+  startDate: Date
+  endDate: Date
   startTime: number
   endTime: number
   graphType: GraphType
@@ -80,7 +80,7 @@ const handleDateChangeRaw = e => {
   e.preventDefault()
 }
 
-const Header: FunctionComponent<Props> = ({
+export const Header: FunctionComponent<Props> = ({
   ready,
   readings,
   startDate,
@@ -94,9 +94,8 @@ const Header: FunctionComponent<Props> = ({
   settingsEndTimeChangeThunk,
   settingsGraphChangeThunk
 }) => {
-  console.log(startDate)
   return (
-    <Container>
+    <Form data-testid="headerForm">
       <H1>Levels</H1>
       <H2>
         {ready
@@ -105,9 +104,12 @@ const Header: FunctionComponent<Props> = ({
       </H2>
 
       <Nav>
-        <Col>
-          <DateLabel>Start date:</DateLabel>
+        <Row>
+          <DateLabel htmlFor="startDate">Start date:</DateLabel>
           <DatePicker
+            customInput={<input data-testid="startDate" type="text" />}
+            name="startDate"
+            id="startDate"
             showPopperArrow={false}
             selected={startDate}
             onChange={(date: Date) => {
@@ -118,10 +120,12 @@ const Header: FunctionComponent<Props> = ({
             maxDate={subDays(new Date(), 1)}
             minDate={dbStartDate}
           />
-        </Col>
-        <Col>
-          <DateLabel>End date:</DateLabel>
+        </Row>
+        <Row>
+          <DateLabel htmlFor="endDate">End date:</DateLabel>
           <DatePicker
+            customInput={<input data-testid="endDate" type="text" />}
+            name="endDate"
             showPopperArrow={false}
             selected={endDate}
             onChange={date => {
@@ -132,29 +136,34 @@ const Header: FunctionComponent<Props> = ({
             minDate={addDays(startDate, 1)}
             maxDate={new Date()}
           />
-        </Col>
-        <Col>
-          <TypeLabel>Graph type:</TypeLabel>
-          <Select
-            instanceId="graphType"
-            isSearchable={false}
-            styles={reactSelectStyles}
-            options={graphOptions}
-            value={graphType}
-            onChange={selection => {
-              settingsGraphChangeThunk(
-                { startDate: getTime(startDate), endDate: getTime(endDate), startTime, endTime },
-                selection
-              )
-            }}
-          />
-        </Col>
+        </Row>
+        <Row>
+          <TypeLabel htmlFor="graphType">Graph type:</TypeLabel>
+          <div data-testid="graphType">
+            <Select
+              name="graphType"
+              instanceId="graphType"
+              isSearchable={false}
+              styles={reactSelectStyles}
+              options={graphOptions}
+              value={graphType}
+              onChange={selection => {
+                settingsGraphChangeThunk(
+                  { startDate: getTime(startDate), endDate: getTime(endDate), startTime, endTime },
+                  selection
+                )
+              }}
+            />
+          </div>
+        </Row>
       </Nav>
       {graphType.value === GraphValues.aggregate && (
         <Nav>
-          <Col>
-            <TypeLabel>Start time:</TypeLabel>
+          <Row>
+            <TypeLabel htmlFor="startTime">Start time:</TypeLabel>
             <Select
+              data-testid="startTime"
+              label="startTime"
               instanceId="startTime"
               isSearchable={false}
               styles={reactSelectStyles}
@@ -169,10 +178,12 @@ const Header: FunctionComponent<Props> = ({
                 })
               }}
             />
-          </Col>
-          <Col>
-            <TypeLabel>End time:</TypeLabel>
+          </Row>
+          <Row>
+            <TypeLabel htmlFor="endTime">End time:</TypeLabel>
             <Select
+              data-testid="endTime"
+              label="endTime"
               instanceId="endTime"
               isSearchable={false}
               styles={reactSelectStyles}
@@ -187,16 +198,14 @@ const Header: FunctionComponent<Props> = ({
                 })
               }}
             />
-          </Col>
+          </Row>
         </Nav>
       )}
-    </Container>
+    </Form>
   )
 }
 
 function mapStateToProps(state: ReduxState) {
-  console.log('header')
-  console.log(state.settings)
   return {
     ready: state.readings?.data?.length > 0 && !state.readings.pending,
     readings: state.readings?.data,
