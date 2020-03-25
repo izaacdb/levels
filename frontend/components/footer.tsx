@@ -32,12 +32,12 @@ const Value = styled.div`
   text-align: center;
 `
 
-type Props = {
+export type Props = {
   readings: Reading[]
   ready: boolean
 }
 
-const Footer: FunctionComponent<Props> = ({ readings, ready }) => {
+export const Footer: FunctionComponent<Props> = ({ readings, ready }) => {
   const sgvs = readings.map(r => r.sgv)
   const total = readings.reduce((acc, r) => (acc += r.sgv), 0)
   const mean = total / readings.length

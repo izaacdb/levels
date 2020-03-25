@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, getByText, render, waitFor, waitForElement } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { dateFormat, Header, Props } from '../components/header'
 import { GraphValues } from '../redux'
 import { format, subDays } from 'date-fns'
@@ -47,10 +47,6 @@ function renderHeader(props: Partial<Props> = {}) {
     graphType: { value: GraphValues.linear, label: 'Linear graph' }
   }
   return render(<Header {...defaultProps} {...props} />)
-}
-
-const keyDownEvent = {
-  key: 'ArrowDown'
 }
 
 describe('<Header />', () => {
