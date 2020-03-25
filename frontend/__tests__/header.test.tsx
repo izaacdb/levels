@@ -55,7 +55,7 @@ describe('<Header />', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('should render a form with several fields', async () => {
+  test('should render a form', async () => {
     const { findByTestId } = renderHeader()
     const header = await findByTestId('headerForm')
     expect(header).toBeInTheDocument()

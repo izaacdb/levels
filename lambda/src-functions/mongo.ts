@@ -52,10 +52,10 @@ export const ReadingSchema = new mongoose.Schema({
   rssi: { type: Number, required: true },
   noise: { type: Number, required: true }
 })
-const Reading = mongoose.model<IReading>('testReadings', ReadingSchema)
+const Reading = mongoose.model<IReading>('readings', ReadingSchema)
 
 export const getReadings = async (startDate: number, endDate: number, startTime: number, endTime: number) => {
-  return Reading.find({
+  const conditions = {
     $expr: {
       $and: [
         {
@@ -86,7 +86,9 @@ export const getReadings = async (startDate: number, endDate: number, startTime:
         }
       ]
     }
-  }).select('sgv date rssi noise')
+  }
+  console.log(JSON.stringify(conditions, null, 2))
+  return Reading.find(conditions).select('sgv date rssi noise')
 }
 
 /**
