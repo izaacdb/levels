@@ -1,5 +1,322 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<Footer /> snapshot test 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <ul
+        class="footer__Container-s1gfd3-0 ikZSNR"
+      >
+        <li
+          class="footer__Item-s1gfd3-1 eUqZAy"
+        >
+          <label
+            class="footer__Label-s1gfd3-2 dSCXMj"
+          >
+            Mean:
+          </label>
+          <div
+            class="footer__Value-s1gfd3-3 etBDQI"
+            data-testid="mean"
+          >
+            9.1
+          </div>
+        </li>
+        <li
+          class="footer__Item-s1gfd3-1 eUqZAy"
+        >
+          <label
+            class="footer__Label-s1gfd3-2 dSCXMj"
+          >
+            Maximum:
+          </label>
+          <div
+            class="footer__Value-s1gfd3-3 etBDQI"
+            data-testid="max"
+          >
+            9.1
+          </div>
+        </li>
+        <li
+          class="footer__Item-s1gfd3-1 eUqZAy"
+        >
+          <label
+            class="footer__Label-s1gfd3-2 dSCXMj"
+          >
+            Minimum:
+          </label>
+          <div
+            class="footer__Value-s1gfd3-3 etBDQI"
+            data-testid="min"
+          >
+            9.0
+          </div>
+        </li>
+        <br />
+        <li
+          class="footer__Item-s1gfd3-1 eUqZAy"
+        >
+          <label
+            class="footer__Label-s1gfd3-2 dSCXMj"
+          >
+            Low readings:
+          </label>
+          <div
+            class="footer__Value-s1gfd3-3 etBDQI"
+            data-testid="low"
+          >
+            0.0
+            %
+          </div>
+        </li>
+        <li
+          class="footer__Item-s1gfd3-1 eUqZAy"
+        >
+          <label
+            class="footer__Label-s1gfd3-2 dSCXMj"
+          >
+            Normal readings:
+          </label>
+          <div
+            class="footer__Value-s1gfd3-3 etBDQI"
+            data-testid="normal"
+          >
+            0.0
+            %
+          </div>
+        </li>
+        <li
+          class="footer__Item-s1gfd3-1 eUqZAy"
+        >
+          <label
+            class="footer__Label-s1gfd3-2 dSCXMj"
+          >
+            High readings:
+          </label>
+          <div
+            class="footer__Value-s1gfd3-3 etBDQI"
+          >
+            100.0
+            %
+          </div>
+        </li>
+        <br />
+        <li
+          class="footer__Item-s1gfd3-1 eUqZAy"
+        >
+          <label
+            class="footer__Label-s1gfd3-2 dSCXMj"
+          >
+            HbA1c (estimated):
+          </label>
+          <div
+            class="footer__Value-s1gfd3-3 etBDQI"
+          >
+            7.3
+            %
+          </div>
+        </li>
+        <li
+          class="footer__Item-s1gfd3-1 eUqZAy"
+        >
+          <label
+            class="footer__Label-s1gfd3-2 dSCXMj"
+          >
+            Standard deviation:
+          </label>
+          <div
+            class="footer__Value-s1gfd3-3 etBDQI"
+          >
+            0.0
+          </div>
+        </li>
+      </ul>
+    </div>
+  </body>,
+  "container": <div>
+    <ul
+      class="footer__Container-s1gfd3-0 ikZSNR"
+    >
+      <li
+        class="footer__Item-s1gfd3-1 eUqZAy"
+      >
+        <label
+          class="footer__Label-s1gfd3-2 dSCXMj"
+        >
+          Mean:
+        </label>
+        <div
+          class="footer__Value-s1gfd3-3 etBDQI"
+          data-testid="mean"
+        >
+          9.1
+        </div>
+      </li>
+      <li
+        class="footer__Item-s1gfd3-1 eUqZAy"
+      >
+        <label
+          class="footer__Label-s1gfd3-2 dSCXMj"
+        >
+          Maximum:
+        </label>
+        <div
+          class="footer__Value-s1gfd3-3 etBDQI"
+          data-testid="max"
+        >
+          9.1
+        </div>
+      </li>
+      <li
+        class="footer__Item-s1gfd3-1 eUqZAy"
+      >
+        <label
+          class="footer__Label-s1gfd3-2 dSCXMj"
+        >
+          Minimum:
+        </label>
+        <div
+          class="footer__Value-s1gfd3-3 etBDQI"
+          data-testid="min"
+        >
+          9.0
+        </div>
+      </li>
+      <br />
+      <li
+        class="footer__Item-s1gfd3-1 eUqZAy"
+      >
+        <label
+          class="footer__Label-s1gfd3-2 dSCXMj"
+        >
+          Low readings:
+        </label>
+        <div
+          class="footer__Value-s1gfd3-3 etBDQI"
+          data-testid="low"
+        >
+          0.0
+          %
+        </div>
+      </li>
+      <li
+        class="footer__Item-s1gfd3-1 eUqZAy"
+      >
+        <label
+          class="footer__Label-s1gfd3-2 dSCXMj"
+        >
+          Normal readings:
+        </label>
+        <div
+          class="footer__Value-s1gfd3-3 etBDQI"
+          data-testid="normal"
+        >
+          0.0
+          %
+        </div>
+      </li>
+      <li
+        class="footer__Item-s1gfd3-1 eUqZAy"
+      >
+        <label
+          class="footer__Label-s1gfd3-2 dSCXMj"
+        >
+          High readings:
+        </label>
+        <div
+          class="footer__Value-s1gfd3-3 etBDQI"
+        >
+          100.0
+          %
+        </div>
+      </li>
+      <br />
+      <li
+        class="footer__Item-s1gfd3-1 eUqZAy"
+      >
+        <label
+          class="footer__Label-s1gfd3-2 dSCXMj"
+        >
+          HbA1c (estimated):
+        </label>
+        <div
+          class="footer__Value-s1gfd3-3 etBDQI"
+        >
+          7.3
+          %
+        </div>
+      </li>
+      <li
+        class="footer__Item-s1gfd3-1 eUqZAy"
+      >
+        <label
+          class="footer__Label-s1gfd3-2 dSCXMj"
+        >
+          Standard deviation:
+        </label>
+        <div
+          class="footer__Value-s1gfd3-3 etBDQI"
+        >
+          0.0
+        </div>
+      </li>
+    </ul>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
 exports[`<Header /> snapshot test 1`] = `
 Object {
   "asFragment": [Function],

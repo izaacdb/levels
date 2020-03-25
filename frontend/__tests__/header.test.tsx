@@ -4,7 +4,7 @@ import { dateFormat, Header, Props } from '../components/header'
 import { GraphValues } from '../redux'
 import { format, subDays } from 'date-fns'
 
-const readings = [
+export const testReadings = [
   {
     date: 1579621683063,
     dateString: '2020-01-21T15:48:03.063+0000',
@@ -39,7 +39,7 @@ function renderHeader(props: Partial<Props> = {}) {
       return () => null
     },
     ready: true,
-    readings,
+    readings: testReadings,
     startDate: subDays(new Date(), 1),
     endDate: new Date(),
     startTime: 0,

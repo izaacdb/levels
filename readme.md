@@ -14,7 +14,7 @@ Technically it is quite new. The frontend is written with NextJS 9 (React), Type
 
 Data is retrieved from a MongoDB database using date and time parameters. The code for this is written with lambda functions, mongoose and typescript.
 
-Creation of the database and updates are done via the Dexcom G6 unit. This is able to transmit glucose readings to a phone via bluetooth every 5 minutes. These  have the readings in mg/dl, the timestamp and some noise data. Once the phone receives these, the Dexcom application is configured to then upload them to a mongo database I have setup - for now I am just using MLab to store the data.
+Creation of the database and updates are done via the Dexcom G6 unit. This is able to transmit glucose testReadings to a phone via bluetooth every 5 minutes. These  have the testReadings in mg/dl, the timestamp and some noise data. Once the phone receives these, the Dexcom application is configured to then upload them to a mongo database I have setup - for now I am just using MLab to store the data.
 
 ---
 #### How to run

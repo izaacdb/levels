@@ -52,7 +52,7 @@ export const ReadingSchema = new mongoose.Schema({
   rssi: { type: Number, required: true },
   noise: { type: Number, required: true }
 })
-const Reading = mongoose.model<IReading>('readings', ReadingSchema)
+const Reading = mongoose.model<IReading>('testReadings', ReadingSchema)
 
 export const getReadings = async (startDate: number, endDate: number, startTime: number, endTime: number) => {
   return Reading.find({
@@ -100,8 +100,8 @@ export const handler: Handler = (event: APIGatewayEvent, context: Context, callb
       console.log(`Retrieved ${readings.length} readings from database`, 200)
       return wrap(readings)
     } else {
-      console.log("Didn't retrieve any readings from DB query")
-      return wrap({ error: "Didn't retrieve any readings from DB query" }, 400)
+      console.log("Didn't retrieve any testReadings from DB query")
+      return wrap({ error: "Didn't retrieve any testReadings from DB query" }, 400)
     }
   })
 }

@@ -10,6 +10,7 @@ const Container = styled.ul`
 `
 
 const Item = styled.li`
+  width: 15rem;
   margin: 0 0 1rem;
   @media (min-width: 800px) {
     margin-right: 2rem;
@@ -52,6 +53,7 @@ export const Footer: FunctionComponent<Props> = ({ readings, ready }) => {
   const min = Math.min(...sgvs)
 
   const low = []
+
   const high = []
   readings.forEach(r => {
     if (r.sgv <= 4.5) {
@@ -61,34 +63,38 @@ export const Footer: FunctionComponent<Props> = ({ readings, ready }) => {
     }
   })
 
+  const lowPercent = (low.length / readings.length) * 100
+  const highPercent = ((readings.length - (high.length + low.length)) / readings.length) * 100
+  const normalPercent = (high.length / readings.length) * 100
+
   return (
     <Container>
       {ready && (
         <>
           <Item>
             <Label>Mean:</Label>
-            <Value>{mean.toFixed(1)}</Value>
+            <Value data-testid="mean">{mean.toFixed(1)}</Value>
           </Item>
           <Item>
             <Label>Maximum:</Label>
-            <Value>{max.toFixed(1)}</Value>
+            <Value data-testid="max">{max.toFixed(1)}</Value>
           </Item>
           <Item>
             <Label>Minimum:</Label>
-            <Value>{min.toFixed(1)}</Value>
+            <Value data-testid="min">{min.toFixed(1)}</Value>
           </Item>
           <br />
           <Item>
             <Label>Low readings:</Label>
-            <Value>{((low.length / readings.length) * 100).toFixed(1)}%</Value>
+            <Value data-testid="low">{lowPercent.toFixed(1)}%</Value>
           </Item>
           <Item>
             <Label>Normal readings:</Label>
-            <Value>{(((readings.length - (high.length + low.length)) / readings.length) * 100).toFixed(1)}%</Value>
+            <Value data-testid="normal">{highPercent.toFixed(1)}%</Value>
           </Item>
           <Item>
             <Label>High readings:</Label>
-            <Value>{((high.length / readings.length) * 100).toFixed(1)}%</Value>
+            <Value>{normalPercent.toFixed(1)}%</Value>
           </Item>
           <br />
           <Item>
