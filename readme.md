@@ -25,10 +25,12 @@ Folder structure is `frontend` (frontend) / `lambda` (backend), so very simple.
 
 ##### Frontend
 
+Do a `yarn install` or `npm install`.
 Either use `yarn` or `npm start`. I'd suggest yarn if you have it installed.
 Easiest way is to `yarn dev` / `npm run dev` at the moment.
 Tests are `yarn test` / `npm test`.
 
 ##### Backend
 
+Do a `yarn install` or `npm install`.
 Run with `yarn start` / `npm start`
