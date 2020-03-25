@@ -7,6 +7,8 @@ Levels
 
 Levels is an application I've been writing for Diabetic users of continuous glucose monitors. Currently there is no simple way for patients like me to easily analyse their glucose data. I'm in a lucky position where I am able to connect these parts to create something more useful, and I'd like to make it more accessible to health-care staff and patients eventually.
 
+It's pretty small at the moment so should be good place for you to have a look at and see how I write code.
+
 ---
 #### Tech stack
 
