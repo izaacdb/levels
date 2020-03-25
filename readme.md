@@ -1,9 +1,9 @@
 Levels
 ------
 
-![preview](preview.jpg)
+![preview](preview.png)
 
-*Note: This is a work in progress, it's probably only about 30% done right now.*
+*Note: This is a work in progress - it's about 30% done right now, and I have many features to add.*
 
 Levels is an application I've been writing for Diabetic users of continuous glucose monitors. Currently there is no simple way for patients like me to easily analyse their glucose data. I'm in a lucky position where I am able to connect these parts to create something more useful, and I'd like to make it more accessible to health-care staff and patients eventually.
 
