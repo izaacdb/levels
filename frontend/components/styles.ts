@@ -22,7 +22,8 @@ export const graphBorder = '#223130'
 export const reactSelectStyles = {
   container: (provided, state) => ({
     ...provided,
-    width: '8rem'
+    width: '8rem',
+    marginRight: '1rem'
   }),
   control: (provided, state) => ({
     ...provided,
@@ -82,11 +83,13 @@ export const reactSelectStyles = {
 
 export const BaseStyles = createGlobalStyle`
   ${reset}
+  *{
+  box-sizing: border-box;
+  }
   ::selection {
     background-color:${aqua};
   }
   body{
-    box-sizing: border-box;
     font-family: 'IBM Plex Sans', sans-serif;
     background-color: ${offBlackBg};
     color: ${white};
@@ -141,7 +144,7 @@ export const BaseStyles = createGlobalStyle`
   }
   .react-datepicker__input-container input{
     cursor: pointer;
-    width: 8rem;
+    width: 9rem;
     background: ${blackBg};
     border: 1px solid ${selectBorder};
     padding: 0.5rem;
@@ -158,6 +161,9 @@ export const BaseStyles = createGlobalStyle`
     border-color: ${cyan}!important;
   }
   
+  .react-datepicker-wrapper{
+    margin: 0
+  }
   text{
     font-weight: 300;
   }

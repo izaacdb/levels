@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Reading } from '../services/api'
 import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from './styles'
 import { ReduxState } from '../redux'
-import { set } from 'date-fns'
+import { set, subHours } from 'date-fns'
 
 type Props = {
   data: Reading[]
@@ -23,19 +23,27 @@ const Container = styled.div`
   overflow: scroll;
   background-color: ${blackBg};
   border: 1px solid ${graphBorder};
+  box-sizing: content-box;
 `
-
-
 
 const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, startTime, endTime }) => {
   const svgRef = createRef<SVGSVGElement>()
 
   useEffect(() => {
+    const sameDayData = data.map(d => {
+      const originalDate = new Date(d.date)
+      console.log('OLD DATE\n', originalDate)
+      // Daylight savings fix
+      const date = originalDate.toString().includes('+0100')
+        ? subHours(originalDate, 1)
+        : new Date(d.date)
 
-    const sameDayData = data.map(d => ({
-      ...d,
-      date: set(d.date, { year: 2000, month: 0, date: 0 })
-    }))
+      console.log('NEW DATE\n', date)
+      return {
+        ...d,
+        date: set(new Date(date), { year: 2000, month: 0, date: 0 })
+      }
+    })
 
     svgRef.current.innerHTML = ''
 

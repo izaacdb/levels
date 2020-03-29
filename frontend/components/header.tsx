@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import DatePicker from 'react-datepicker'
 import { addDays, getTime, subDays } from 'date-fns'
-import { GraphType, graphOptions, GraphValues, ReduxState, timeOptions } from '../redux'
+import { GraphType, graphOptions, GraphValues, ReduxState, startTimeOptions, endTimeOptions } from '../redux'
 import { Reading } from '../services/api'
 import { reactSelectStyles, white } from './styles'
 import {
@@ -36,6 +36,7 @@ const Form = styled.form`
 const Row = styled.li`
   color: ${white};
   margin: 0 1rem 1rem 0;
+  min-width: 8rem;
   @media (min-width: 800px) {
     display: inline-block;
   }
@@ -47,9 +48,6 @@ const DateLabel = styled.label`
     min-width: 5rem;
   }
   @media (min-width: 800px) {
-    margin-right: 1rem;
-  }
-  + div {
     margin-right: 1rem;
   }
 `
@@ -167,8 +165,8 @@ export const Header: FunctionComponent<Props> = ({
               instanceId="startTime"
               isSearchable={false}
               styles={reactSelectStyles}
-              options={timeOptions}
-              value={timeOptions[startTime]}
+              options={startTimeOptions}
+              value={startTimeOptions[startTime]}
               onChange={selection => {
                 settingsStartTimeChangeThunk({
                   startDate: getTime(startDate),
@@ -187,8 +185,8 @@ export const Header: FunctionComponent<Props> = ({
               instanceId="endTime"
               isSearchable={false}
               styles={reactSelectStyles}
-              options={timeOptions}
-              value={timeOptions[endTime]}
+              options={endTimeOptions}
+              value={endTimeOptions[endTime]}
               onChange={selection => {
                 settingsEndTimeChangeThunk({
                   startDate: getTime(startDate),

@@ -14,10 +14,10 @@ function renderFooter(props: Partial<Props> = {}) {
 const numberRegEx = /^\d+(\.\d{1,2})?$/ // only 244 | 10.89 | 9.5 etc
 
 describe('<Footer />', () => {
-  test('snapshot test', () => {
-    const tree = renderFooter()
-    expect(tree).toMatchSnapshot()
-  })
+  // test('snapshot test', () => {
+  //   const tree = renderFooter()
+  //   expect(tree).toMatchSnapshot()
+  // })
 
   test('mean should show a numeric value', () => {
     const { getByTestId } = renderFooter()
