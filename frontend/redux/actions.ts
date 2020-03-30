@@ -29,3 +29,7 @@ export const settingsEndTimeChange = (data: number) => {
 export const settingsGraphChange = (data: GraphType) => {
   return { type: ActionType.SETTINGS_GRAPH_CHANGE, data }
 }
+
+export const settingsResetTimes = () => {
+  return {type: ActionType.SETTINGS_RESET_TIMES}
+}

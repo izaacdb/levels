@@ -67,7 +67,7 @@ export const reactSelectStyles = {
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isSelected ? cyan : null,
+    backgroundColor: state.isDisabled ? 'black' : state.isSelected ? cyan : null,
     color: state.isSelected ? white : null,
     '&:hover': {
       backgroundColor: cyan,

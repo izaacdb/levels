@@ -13,7 +13,8 @@ export enum ActionType {
   SETTINGS_END_DATE_CHANGE = '[Settings] End date changed',
   SETTINGS_START_TIME_CHANGE = '[Settings] Start time changed',
   SETTINGS_END_TIME_CHANGE = '[Settings] End time changed',
-  SETTINGS_GRAPH_CHANGE = '[Settings] Graph type changed'
+  SETTINGS_GRAPH_CHANGE = '[Settings] Graph type changed',
+  SETTINGS_RESET_TIMES = '[Settings] Times set to default'
 }
 
 export enum GraphValues {
@@ -74,8 +75,6 @@ export const endTimeOptions = [
   { value: 22, label: '23:00' },
   { value: 23, label: '00:00' }
 ]
-
-
 
 export interface GraphType {
   value: string
@@ -155,7 +154,18 @@ export const settingsReducer = (
       return { ...state, endTime: action.data }
     }
     case ActionType.SETTINGS_GRAPH_CHANGE: {
-      return { ...state, graphType: action.data }
+      console.log('gcange')
+      return {
+        ...state,
+        graphType: action.data
+      }
+    }
+    case ActionType.SETTINGS_RESET_TIMES: {
+      return {
+        ...state,
+        startTime: 0,
+        endTime: 23
+      }
     }
     default: {
       return state

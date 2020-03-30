@@ -2,7 +2,7 @@ import { readingsGet } from '../services/api'
 import {
   readingsGetFailed,
   readingsGetPending,
-  readingsGetSuccess,
+  readingsGetSuccess, settingsResetTimes,
   settingsEndDateChange, settingsEndTimeChange, settingsGraphChange,
   settingsStartDateChange, settingsStartTimeChange
 } from './actions'
@@ -58,6 +58,7 @@ export function settingsEndTimeChangeThunk(options: Options) {
 
 export function settingsGraphChangeThunk(options: Options, graphType: GraphType) {
   return dispatch => {
+    dispatch(settingsResetTimes())
     dispatch(settingsGraphChange(graphType))
     dispatch(getReadingsThunk(options))
   }

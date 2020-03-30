@@ -32,13 +32,10 @@ const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, start
   useEffect(() => {
     const sameDayData = data.map(d => {
       const originalDate = new Date(d.date)
-      console.log('OLD DATE\n', originalDate)
       // Daylight savings fix
       const date = originalDate.toString().includes('+0100')
         ? subHours(originalDate, 1)
         : new Date(d.date)
-
-      console.log('NEW DATE\n', date)
       return {
         ...d,
         date: set(new Date(date), { year: 2000, month: 0, date: 0 })
@@ -65,8 +62,6 @@ const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, start
       seconds: 0,
       milliseconds: 0
     })
-
-    console.log(startTime, endTime)
 
     const transition = d3
       .transition()

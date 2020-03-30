@@ -33,7 +33,7 @@ const H2 = styled.h2`
 const Form = styled.form`
   margin: 1rem 0 0;
 `
-const Row = styled.li`
+const Control = styled.li`
   color: ${white};
   margin: 0 1rem 1rem 0;
   min-width: 8rem;
@@ -57,7 +57,7 @@ const TypeLabel = styled(DateLabel)`
   }
 `
 
-const Nav = styled.ul``
+const Row = styled.ul``
 
 export type Props = {
   ready: boolean
@@ -101,8 +101,8 @@ export const Header: FunctionComponent<Props> = ({
           : 'Loading data, please wait'}
       </H2>
 
-      <Nav>
-        <Row>
+      <Row>
+        <Control>
           <DateLabel htmlFor="startDate">Start date:</DateLabel>
           <DatePicker
             customInput={<input data-testid="startDate" type="text" />}
@@ -118,8 +118,8 @@ export const Header: FunctionComponent<Props> = ({
             maxDate={subDays(new Date(), 1)}
             minDate={dbStartDate}
           />
-        </Row>
-        <Row>
+        </Control>
+        <Control>
           <DateLabel htmlFor="endDate">End date:</DateLabel>
           <DatePicker
             customInput={<input data-testid="endDate" type="text" />}
@@ -134,8 +134,8 @@ export const Header: FunctionComponent<Props> = ({
             minDate={addDays(startDate, 1)}
             maxDate={new Date()}
           />
-        </Row>
-        <Row>
+        </Control>
+        <Control>
           <TypeLabel htmlFor="graphType">Graph type:</TypeLabel>
           <div data-testid="graphType">
             <Select
@@ -147,17 +147,17 @@ export const Header: FunctionComponent<Props> = ({
               value={graphType}
               onChange={selection => {
                 settingsGraphChangeThunk(
-                  { startDate: getTime(startDate), endDate: getTime(endDate), startTime, endTime },
+                  { startDate: getTime(startDate), endDate: getTime(endDate), startTime: 0, endTime: 23 },
                   selection
                 )
               }}
             />
           </div>
-        </Row>
-      </Nav>
+        </Control>
+      </Row>
       {graphType.value === GraphValues.aggregate && (
-        <Nav>
-          <Row>
+        <Row>
+          <Control>
             <TypeLabel htmlFor="startTime">Start time:</TypeLabel>
             <Select
               data-testid="startTime"
@@ -165,7 +165,7 @@ export const Header: FunctionComponent<Props> = ({
               instanceId="startTime"
               isSearchable={false}
               styles={reactSelectStyles}
-              options={startTimeOptions}
+              options={startTimeOptions.map(o => ({ ...o, isDisabled: endTime < o.value }))}
               value={startTimeOptions[startTime]}
               onChange={selection => {
                 settingsStartTimeChangeThunk({
@@ -176,8 +176,8 @@ export const Header: FunctionComponent<Props> = ({
                 })
               }}
             />
-          </Row>
-          <Row>
+          </Control>
+          <Control>
             <TypeLabel htmlFor="endTime">End time:</TypeLabel>
             <Select
               data-testid="endTime"
@@ -185,7 +185,7 @@ export const Header: FunctionComponent<Props> = ({
               instanceId="endTime"
               isSearchable={false}
               styles={reactSelectStyles}
-              options={endTimeOptions}
+              options={endTimeOptions.map(o => ({ ...o, isDisabled: startTime > o.value }))}
               value={endTimeOptions[endTime]}
               onChange={selection => {
                 settingsEndTimeChangeThunk({
@@ -196,8 +196,8 @@ export const Header: FunctionComponent<Props> = ({
                 })
               }}
             />
-          </Row>
-        </Nav>
+          </Control>
+        </Row>
       )}
     </Form>
   )
