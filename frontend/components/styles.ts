@@ -67,12 +67,12 @@ export const reactSelectStyles = {
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isDisabled ? 'black' : state.isSelected ? cyan : null,
-    color: state.isSelected ? white : null,
+    backgroundColor: state.isDisabled ? selectHeadBg : state.isSelected ? cyan : null,
+    color: state.isDisabled ? selectBorder : state.isSelected ? white : null,
     '&:hover': {
-      backgroundColor: cyan,
-      color: white,
-      cursor: 'pointer'
+      backgroundColor: state.isDisabled ? null : cyan,
+      color: state.isDisabled ? null : white,
+      cursor: state.isDisabled ? 'unset' : 'pointer'
     }
   }),
   menuList: (provided, state) => ({

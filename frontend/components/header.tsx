@@ -165,7 +165,8 @@ export const Header: FunctionComponent<Props> = ({
               instanceId="startTime"
               isSearchable={false}
               styles={reactSelectStyles}
-              options={startTimeOptions.map(o => ({ ...o, isDisabled: endTime < o.value }))}
+              options={startTimeOptions}
+              isOptionDisabled={o => endTime < o.value}
               value={startTimeOptions[startTime]}
               onChange={selection => {
                 settingsStartTimeChangeThunk({
@@ -185,7 +186,8 @@ export const Header: FunctionComponent<Props> = ({
               instanceId="endTime"
               isSearchable={false}
               styles={reactSelectStyles}
-              options={endTimeOptions.map(o => ({ ...o, isDisabled: startTime > o.value }))}
+              options={endTimeOptions}
+              isOptionDisabled={o => startTime > o.value}
               value={endTimeOptions[endTime]}
               onChange={selection => {
                 settingsEndTimeChangeThunk({
