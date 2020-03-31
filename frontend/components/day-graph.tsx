@@ -48,7 +48,7 @@ const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, start
       year: 2000,
       month: 0,
       date: 0,
-      hours: startTime,
+      hours: startTime - 1,
       minutes: 59,
       seconds: 59,
       milliseconds: 999
@@ -57,7 +57,7 @@ const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, start
       year: 2000,
       month: 0,
       date: 0,
-      hours: endTime,
+      hours: endTime + 1,
       minutes: 0,
       seconds: 0,
       milliseconds: 0
@@ -109,7 +109,7 @@ const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, start
     const xScale = d3
       .scaleTime()
       .domain([xStart, xEnd])
-      .nice(d3.timeDay)
+      // .nice(d3.timeDay)
       .range([margin, width - margin])
 
     const yScale = d3
