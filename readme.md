@@ -5,7 +5,7 @@ Levels
 
 *Note: This is a work in progress*
 
-Levels is an application I've been writing for users of continuous glucose monitors. This lets you analyse all the data ever collected from a CGM device.
+Levels is an application I've been writing for users of continuous glucose monitors. This lets you analyse all the data ever collected from a CGM device. It relies on the `xDrip` application for data uploads.
 
 ---
 #### Tech stack
