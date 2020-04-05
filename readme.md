@@ -19,7 +19,7 @@ Creation of the database and updates are done via the Dexcom G6 unit. This is ab
 ---
 #### How to run
 
-The easiest way is not to run it, as you wont have my database keys. I've put it online at https://levels-frontend.netlify.com. Bear in mind this is a little slow because I'm on the free tier of everything! Data is live and currently transmitting from my arm, hope you enjoy the insight into the inner workings of my body.
+The easiest way is not to run it, as you wont have my database keys. I've put it online at https://levels-frontend.netlify.com. Data is live and currently transmitting from my arm.
 
 Folder structure is `frontend` (frontend) / `lambda` (backend), so very simple.
 
