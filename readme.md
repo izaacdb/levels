@@ -3,11 +3,9 @@ Levels
 
 ![preview](preview.png)
 
-*Note: This is a work in progress - it's about 30% done right now, and I have many features to add.*
+*Note: This is a work in progress*
 
-Levels is an application I've been writing for Diabetic users of continuous glucose monitors. Currently there is no simple way for patients like me to easily analyse their glucose data. I'm in a lucky position where I am able to connect these parts to create something more useful, and I'd like to make it more accessible to health-care staff and patients eventually.
-
-It's pretty small at the moment so should be good place for you to have a look at and see how I write code.
+Levels is an application I've been writing for users of continuous glucose monitors. This lets you analyse all the data ever collected from a CGM device.
 
 ---
 #### Tech stack
