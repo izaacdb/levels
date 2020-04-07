@@ -154,7 +154,6 @@ export const settingsReducer = (
       return { ...state, endTime: action.data }
     }
     case ActionType.SETTINGS_GRAPH_CHANGE: {
-      console.log('gcange')
       return {
         ...state,
         graphType: action.data

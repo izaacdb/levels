@@ -36,8 +36,19 @@ export class Mobile extends App<any> {
       <>
         <Head>
           <title>Levels</title>
-          <link rel="shortcut icon" href="favicon.ico" />
+
+          <meta charSet="utf-8" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta name="viewport" content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" />
+          <meta name="description" content="Description" />
+          <meta name="keywords" content="Keywords" />
+
+          <link rel="shortcut icon" href="icons/favicon.ico" />
+          <link rel="manifest" href="/manifest.json" />
+          <link href='/icons/icon-16x16.png' rel='icon' type='image/png' sizes='16x16' />
+          <link href='/icons/icon-32x32.png' rel='icon' type='image/png' sizes='32x32' />
+          <link rel="apple-touch-icon" href="/icons/apple-icon.png" />
+          <meta name="theme-color" content="#466b6c"/>
         </Head>
         <BaseStyles />
         <Provider store={reduxStore}>

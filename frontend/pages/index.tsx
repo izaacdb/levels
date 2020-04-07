@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { GraphType, GraphValues, ReduxState } from '../redux'
 import { getReadingsThunk, Options } from '../redux/thunks'
 import { Reading } from '../services/api'
-import Graph from '../components/graph'
-import DayGraph from '../components/day-graph'
+import Graph from '../components/graphs/graph'
+import DayGraph from '../components/graphs/day-graph'
 import Loading from '../components/loading'
 
 type Props = {

@@ -3,7 +3,7 @@ import Select from 'react-select'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import DatePicker from 'react-datepicker'
-import { addDays, getTime, subDays } from 'date-fns'
+import { addDays, getTime, set, subDays } from 'date-fns'
 import { GraphType, graphOptions, GraphValues, ReduxState, startTimeOptions, endTimeOptions } from '../redux'
 import { Reading } from '../services/api'
 import { reactSelectStyles, white } from './styles'
@@ -127,7 +127,9 @@ export const Header: FunctionComponent<Props> = ({
             showPopperArrow={false}
             selected={endDate}
             onChange={date => {
-              settingsEndChangeThunk({ startDate: getTime(startDate), endDate: getTime(date), startTime, endTime })
+              // startDate: getTime(set(startDate, { seconds: 0, minutes: 0, hours: 0 })),
+              //   endDate: getTime(set(endDate, { seconds: 59, minutes: 59, hours: 23 })),
+              settingsEndChangeThunk({ startDate: getTime(startDate), endDate: getTime(set(date, { seconds: 59, minutes: 59, hours: 23 })), startTime, endTime })
             }}
             onChangeRaw={handleDateChangeRaw}
             dateFormat={dateFormat}

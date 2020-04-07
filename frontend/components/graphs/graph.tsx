@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
 import styled from 'styled-components'
-import { Reading } from '../services/api'
-import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from './styles'
-import { Options } from '../redux/thunks'
+import { Reading } from '../../services/api'
+import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from '../styles'
+import { Options } from '../../redux/thunks'
 import { differenceInDays } from 'date-fns'
 
 type Props = {
@@ -70,13 +70,13 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin, options 
 
     // actual graph data vvv
 
-    const xMin = d3.min(data, () => options.startDate)
-    const xMax = d3.max(data, () => options.endDate)
+    const xMin = d3.min(data, () => options.startDate -1)
+    const xMax = d3.max(data, () => options.endDate + 1)
 
     const xScale = d3
       .scaleTime()
       .domain([xMin, xMax])
-      // .nice(d3.ti)
+      .nice(d3.timeDay)
       .range([margin, width - margin])
 
     const yScale = d3

@@ -2,9 +2,9 @@ import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Reading } from '../services/api'
-import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from './styles'
-import { ReduxState } from '../redux'
+import { Reading } from '../../services/api'
+import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from '../styles'
+import { ReduxState } from '../../redux'
 import { set, subHours } from 'date-fns'
 
 type Props = {
@@ -23,7 +23,6 @@ const Container = styled.div`
   overflow: scroll;
   background-color: ${blackBg};
   border: 1px solid ${graphBorder};
-  box-sizing: content-box;
 `
 
 const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, startTime, endTime }) => {
@@ -109,7 +108,6 @@ const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, start
     const xScale = d3
       .scaleTime()
       .domain([xStart, xEnd])
-      // .nice(d3.timeDay)
       .range([margin, width - margin])
 
     const yScale = d3
