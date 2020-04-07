@@ -43,7 +43,7 @@ export class Mobile extends App<any> {
           <meta name="description" content="Description" />
           <meta name="keywords" content="Keywords" />
 
-          <link rel="shortcut icon" href="icons/favicon.ico" />
+          <link rel="shortcut icon" href="icons/icon-32x32.ico" />
           <link rel="manifest" href="/manifest.json" />
           <link href='/icons/icon-16x16.png' rel='icon' type='image/png' sizes='16x16' />
           <link href='/icons/icon-32x32.png' rel='icon' type='image/png' sizes='32x32' />
