@@ -45,10 +45,16 @@ export class Mobile extends App<any> {
 
           <link rel="shortcut icon" href="icons/icon-32x32.ico" />
           <link rel="manifest" href="/manifest.json" />
-          <link href='/icons/icon-16x16.png' rel='icon' type='image/png' sizes='16x16' />
-          <link href='/icons/icon-32x32.png' rel='icon' type='image/png' sizes='32x32' />
+          <link href="/icons/icon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
+          <link href="/icons/icon-32x32.png" rel="icon" type="image/png" sizes="32x32" />
           <link rel="apple-touch-icon" href="/icons/apple-icon.png" />
-          <meta name="theme-color" content="#466b6c"/>
+          <meta name="theme-color" content="#466b6c" />
+
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54472595-3" />
+          <script>
+            window.dataLayer = window.dataLayer || []; function gtag(){(window as any).dataLayer.push(arguments)}
+            gtag('js', new Date()); gtag('config', 'UA-54472595-3');
+          </script>
         </Head>
         <BaseStyles />
         <Provider store={reduxStore}>
