@@ -9,6 +9,7 @@ import { BaseStyles } from '../components/styles'
 import Header from '../components/header'
 import Footer from '../components/footer'
 import Background from '../components/background'
+import ReactGA from 'react-ga'
 
 const Wrapper = styled.div`
   position: absolute;
@@ -29,6 +30,11 @@ export class Mobile extends App<any> {
     super(props)
   }
 
+  componentDidMount() {
+    ReactGA.initialize('UA-54472595-3')
+    ReactGA.pageview(window.location.pathname + window.location.search)
+  }
+
   render() {
     const { Component, pageProps, reduxStore } = this.props
 
@@ -36,25 +42,17 @@ export class Mobile extends App<any> {
       <>
         <Head>
           <title>Levels</title>
-
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta name="viewport" content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" />
           <meta name="description" content="Description" />
           <meta name="keywords" content="Keywords" />
-
           <link rel="shortcut icon" href="icons/icon-32x32.ico" />
           <link rel="manifest" href="/manifest.json" />
           <link href="/icons/icon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
           <link href="/icons/icon-32x32.png" rel="icon" type="image/png" sizes="32x32" />
           <link rel="apple-touch-icon" href="/icons/apple-icon.png" />
           <meta name="theme-color" content="#466b6c" />
-
-          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54472595-3" />
-          <script>
-            window.dataLayer = window.dataLayer || []; function gtag(){(window as any).dataLayer.push(arguments)}
-            gtag('js', new Date()); gtag('config', 'UA-54472595-3');
-          </script>
         </Head>
         <BaseStyles />
         <Provider store={reduxStore}>
