@@ -47,12 +47,8 @@ export class Mobile extends App<any> {
           <meta name="viewport" content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" />
           <meta name="description" content="Description" />
           <meta name="keywords" content="Keywords" />
-          <link rel="shortcut icon" href="icons/icon-32x32.ico" />
-          <link rel="manifest" href="/manifest.json" />
-          <link href="/icons/icon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
-          <link href="/icons/icon-32x32.png" rel="icon" type="image/png" sizes="32x32" />
-          <link rel="apple-touch-icon" href="/icons/apple-icon.png" />
           <meta name="theme-color" content="#466b6c" />
+          <link rel="shortcut icon" href="icons/icon-32x32.ico" />
         </Head>
         <BaseStyles />
         <Provider store={reduxStore}>
