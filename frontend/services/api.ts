@@ -14,7 +14,7 @@ const getMongoURL = (options: Options) => {
   const params = new URLSearchParams(JSON.parse(JSON.stringify(options))) // removes undefined
   switch (env) {
     case 'production':
-      return `https://levels-lambdas.netlify.com/.netlify/functions/mongo?${params}`
+      return `https://levels-lambdas.netlify.app/.netlify/functions/mongo?${params}`
     case 'development':
     case 'test':
     default:
