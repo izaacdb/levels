@@ -26,6 +26,7 @@ type Props = {
 }
 
 export const Container = styled.div`
+  box-sizing: content-box;
   width: 100%;
   overflow-x: scroll;
   background-color: ${blackBg};
