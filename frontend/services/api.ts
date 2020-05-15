@@ -18,7 +18,7 @@ const getMongoURL = (options: Options) => {
     case 'development':
     case 'test':
     default:
-      return `http://192.168.1.3:9000/mongo?${params}`
+      return `http://localhost:9000/mongo?${params}`
   }
 }
 

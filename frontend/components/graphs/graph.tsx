@@ -2,7 +2,18 @@ import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
 import styled from 'styled-components'
 import { Reading } from '../../services/api'
-import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from '../styles'
+import {
+  blackBg,
+  cyan,
+  graphBorder,
+  high,
+  low,
+  lowBorder,
+  lowDot,
+  normalDot,
+  offBlackBg,
+  white
+} from '../styles'
 import { Options } from '../../redux/thunks'
 import { differenceInDays } from 'date-fns'
 
@@ -14,11 +25,19 @@ type Props = {
   options: Options
 }
 
-const Container = styled.div`
+export const Container = styled.div`
   width: 100%;
-  overflow: scroll;
+  overflow-x: scroll;
   background-color: ${blackBg};
   border: 1px solid ${graphBorder};
+  &::-webkit-scrollbar {
+    border: ${offBlackBg};
+  }
+  &::-webkit-scrollbar-thumb{
+    background-color: ${cyan};
+    border: 2px solid ${blackBg};
+    -webkit-border-radius: 0.375rem;
+  }
 `
 
 const Graph: FunctionComponent<Props> = ({ data, height, width, margin, options }) => {
@@ -70,7 +89,7 @@ const Graph: FunctionComponent<Props> = ({ data, height, width, margin, options 
 
     // actual graph data vvv
 
-    const xMin = d3.min(data, () => options.startDate -1)
+    const xMin = d3.min(data, () => options.startDate - 1)
     const xMax = d3.max(data, () => options.endDate + 1)
 
     const xScale = d3

@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useEffect, createRef } from 'react'
 import * as d3 from 'd3'
-import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { Reading } from '../../services/api'
-import { blackBg, graphBorder, high, low, lowBorder, lowDot, normalDot, white } from '../styles'
+import { high, low, lowBorder, lowDot, normalDot, white } from '../styles'
 import { ReduxState } from '../../redux'
 import { set, subHours } from 'date-fns'
+import { Container } from './graph'
 
 type Props = {
   data: Reading[]
@@ -17,13 +17,6 @@ type Props = {
   startTime: number
   endTime: number
 }
-
-const Container = styled.div`
-  width: 100%;
-  overflow: scroll;
-  background-color: ${blackBg};
-  border: 1px solid ${graphBorder};
-`
 
 const DayGraph: FunctionComponent<Props> = ({ data, height, width, margin, startTime, endTime }) => {
   const svgRef = createRef<SVGSVGElement>()
