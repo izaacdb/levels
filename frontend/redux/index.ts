@@ -105,11 +105,11 @@ const initialReadingState: ReduxState['readings'] = {
 }
 
 const initialSettingsState: ReduxState['settings'] = {
-  startDate: getTime(subDays(new Date(), 3)),
+  startDate: getTime(subDays(new Date(), 7)),
   endDate: getTime(new Date()),
   startTime: 0,
   endTime: 23,
-  graphType: graphOptions[0]
+  graphType: graphOptions[1]
 }
 
 export const readingsReducer = (state: ReduxState['readings'] = initialReadingState, action: Action<Reading[]>) => {
